@@ -12,6 +12,6 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "fb-messenger": "^1.2.0",
-    "loki": "^0.6.4"
+    "lokijs": "^1.5.1"
   }
 }
