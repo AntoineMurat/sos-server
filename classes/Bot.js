@@ -77,7 +77,7 @@ class Bot{
 	}
 
 	handlePostback(event){
-		switch(event.payload){
+		switch(event.postback.payload){
 			case 'JE_SOS':
 				this.addContact(event.sender)
 				break
