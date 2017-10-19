@@ -60,14 +60,17 @@ class Bot{
 		console.log('Message reçu.')
 
 		switch(event.message.text){
+			case 'Je sos':
 			case 'je sos':
 				this.addContact(event.sender)
 				break
 
+			case 'Je ne sos plus':
 			case 'je ne sos plus':
 				this.removeContact(event.sender)
 				break
 
+			case 'Status':
 			case 'status':
 				if (this.contacts.where(contact => contact.id === event.sender.id).length !== 0)
 					this.send(event.sender, "Tu appartiens à la team SOS.")
