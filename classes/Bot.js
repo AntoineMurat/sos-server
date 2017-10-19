@@ -70,13 +70,13 @@ class Bot{
 
 			case 'status':
 				if (this.contacts.where(contact => contact.id === event.sender.id).length !== 0)
-					this.send(event.contact, "Tu appartiens à la team SOS.")
+					this.send(event.sender, "Tu appartiens à la team SOS.")
 				else
-					this.send(event.contact, "Tu n'appartiens pas à la team SOS.")
+					this.send(event.sender, "Tu n'appartiens pas à la team SOS.")
 				
 
 			default:
-				this.send(event.sender, 'Commandes:\nje sos\njs ne sos plus\lstatus')
+				this.send(event.sender, 'Commandes:\nje sos\njs ne sos plus\nstatus')
 		}
 	}
 
