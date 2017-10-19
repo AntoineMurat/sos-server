@@ -22,7 +22,8 @@ class Bot{
 		})
 
 		httpServer.app.post('/webhook', (req, res) => {
-			var data = req.body
+			console.log(req)
+			const data = req.body
 
 			console.log(data)
 
