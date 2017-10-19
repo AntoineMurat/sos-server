@@ -1,11 +1,14 @@
 const FBMessenger = require('fb-messenger')
+const db = new loki('db.json')
 
 class Bot{
 	constructor(httpServer, token, verifyToken){
 		this.httpServer = httpServer
-		this.contacts = []
-		this.messenger = new FBMessenger(token)
 
+		// Chargement de la BDD.
+		this.contacts = db.getCollection('contacts') || db.addCollection('contacts')
+
+		this.messenger = new FBMessenger(token)
 		this.setupHook(httpServer, verifyToken)
 	}
 
@@ -35,10 +38,7 @@ class Bot{
 					// Iterate over each messaging event
 					entry.messaging.forEach(event => {
 						if (event.message) {
-							console.log('Message reçu.')
-							console.log(event.message)
-							this.addContact(event.sender.id)
-							this.notifyAll()
+							this.handleMessage(event)
 						} else {
 							console.log("Webhook received unknown event: ", event)
 						}
@@ -55,18 +55,48 @@ class Bot{
 		})
 	}
 
-	notifyAll(){
+	handleMessage(event){
+		console.log('Message reçu.')
+
+		switch(event.message.text){
+			case 'je sos':
+				this.addContact(event.sender)
+				break
+
+			case 'je ne sos plus':
+				this.removeContact(event.sender)
+				break
+
+			case 'status':
+				if this.contacts.where(contact => contact.id === event.sender.id).length !== 0
+					this.send(event.contact, "Tu appartiens à la team SOS.")
+				else
+					this.send(event.contact, "Tu n'appartiens pas à la team SOS.")
+				
+
+			default:
+				this.send(event.contact, 'Commandes:\nje sos\njs ne sos plus\lstatus')
+		}
+	}
+
+	send(contact, message){
+		this.messenger.sendTextMessage(contact.id, message, (err, body) => {
+			if(err) return console.error(err)
+		})
+	}
+
+	sendAll(message){
 		this.contacts.forEach(contact => {
-
-			this.messenger.sendTextMessage(contact, 'SOS-Bot à votre service !', (err, body) => {
-				if(err) return console.error(err)
-			})
-
+			this.send(contact, message)
 		})
 	}
 
 	addContact(contact){
-		this.contacts.push(contact)
+		this.contacts.insert(contact)
+	}
+
+	removeContact(contact){
+		this.contacts.removeWhere(contacToCheck => contact.id === contactToCheck.id)
 	}
 }
 

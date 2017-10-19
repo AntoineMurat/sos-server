@@ -7,5 +7,3 @@ const verifyToken = 'wellhooked'
 
 httpServer = new HTTPServer(80, 443, './static')
 bot = new Bot(httpServer, appToken, verifyToken)
-
-setInterval(_ => bot.notifyAll(), 5000)
