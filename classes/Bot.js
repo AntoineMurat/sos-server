@@ -63,19 +63,18 @@ class Bot{
 			case 'Je sos':
 			case 'je sos':
 				this.addContact(event.sender)
+				this.sendStatus(event.sender)
 				break
 
 			case 'Je ne sos plus':
 			case 'je ne sos plus':
 				this.removeContact(event.sender)
+				this.sendStatus(event.sender)
 				break
 
 			case 'Status':
 			case 'status':
-				if (this.contacts.where(contact => contact.id === event.sender.id).length !== 0)
-					this.send(event.sender, "Tu appartiens à la team SOS.")
-				else
-					this.send(event.sender, "Tu n'appartiens pas à la team SOS.")
+				this.sendStatus(event.sender)
 				break
 
 			default:
@@ -88,6 +87,13 @@ class Bot{
 			if(err) return console.error(err)
 			console.log(body)
 		})
+	}
+
+	sendStatus(contact){
+		if (this.contacts.where(contactToCheck => contact.id === contactToCheck.id).length !== 0)
+			this.send(contact, "Tu appartiens à la team SOS.")
+		else
+			this.send(contact, "Tu n'appartiens pas à la team SOS.")
 	}
 
 	sendAll(message){
