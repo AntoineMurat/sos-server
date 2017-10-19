@@ -97,7 +97,7 @@ class Bot{
 	}
 
 	removeContact(contact){
-		this.contacts.removeWhere(contacToCheck => contact.id === contactToCheck.id)
+		this.contacts.removeWhere(contactToCheck => contact.id === contactToCheck.id)
 	}
 }
 
