@@ -9,7 +9,7 @@ class Bot{
 		this.setupHook(httpServer, verifyToken)
 	}
 
-	setupHook(httpServer){
+	setupHook(httpServer, verifyToken){
 		// WebHook
 		httpServer.app.get('/webhook', (req, res) => {
 			if (req.query['hub.mode'] === 'subscribe' && req.query['hub.verify_token'] === verifyToken) {
