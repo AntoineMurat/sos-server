@@ -77,6 +77,7 @@ class Bot{
 	}
 
 	handlePostback(event){
+		console.log(event.postback)
 		switch(event.postback.payload){
 			case 'JE_SOS':
 				this.addContact(event.sender)
@@ -102,7 +103,7 @@ class Bot{
 		if (this.getStatus(contact) === "Tu appartiens à la team SOS."){
 			this.messenger.sendButtonsMessage(contact.id, this.getStatus(contact), [{
 				type:"postback",
-				title:"Je ne SOS plus..",
+				title:"Je ne SOS plus...",
 				payload:"JE_NE_SOS_PLUS"
 			},{
 				type:"postback",
