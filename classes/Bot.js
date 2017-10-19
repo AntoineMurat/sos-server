@@ -76,7 +76,7 @@ class Bot{
 				break
 
 			default:
-				this.send(event.sender, 'Commandes:\nje sos\njs ne sos plus\nstatus')
+				this.send(event.sender, 'Commandes:\nje sos\nje ne sos plus\nstatus')
 		}
 	}
 
