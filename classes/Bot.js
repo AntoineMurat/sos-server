@@ -40,6 +40,8 @@ class Bot{
 					entry.messaging.forEach(event => {
 						if (event.message) {
 							this.handleMessage(event)
+						} else if (event.postback){
+							this.handlePostback(event)
 						} else {
 							console.log("Webhook received unknown event: ", event)
 						}
@@ -63,23 +65,30 @@ class Bot{
 			case 'Je sos':
 			case 'je sos':
 				this.addContact(event.sender)
-				this.sendStatus(event.sender)
 				break
 
 			case 'Je ne sos plus':
 			case 'je ne sos plus':
 				this.removeContact(event.sender)
-				this.sendStatus(event.sender)
 				break
-
-			case 'Status':
-			case 'status':
-				this.sendStatus(event.sender)
-				break
-
-			default:
-				this.send(event.sender, 'Commandes:\nje sos\nje ne sos plus\nstatus')
 		}
+
+		this.sendMainMenu(event.sender)
+	}
+
+	handlePostback(event){
+		switch(event.payload){
+			case 'JE_SOS':
+				this.addContact(event.sender)
+				break
+			case 'JE_NE_SOS_PLUS':
+				this.removeContact(event.sender)
+				break
+			case 'LISTE_SOS':
+				this.send(event.sender, 'Non implémenté')
+		}
+
+		this.sendMainMenu(event.sender)
 	}
 
 	send(contact, message){
@@ -89,11 +98,35 @@ class Bot{
 		})
 	}
 
-	sendStatus(contact){
+	sendMainMenu(contact){
+		if (this.getStatus(contact) === "Tu appartiens à la team SOS."){
+			this.messenger.sendButtonsMessage(contact.id, this.getStatus(contact), [{
+				type:"postback",
+				title:"Je ne SOS plus..",
+				payload:"JE_NE_SOS_PLUS"
+			},{
+				type:"postback",
+				title:"Liste les SOS.",
+				payload:"LISTE_SOS"
+			}])
+		} else {
+			this.messenger.sendButtonsMessage(contact.id, this.getStatus(contact), [{
+				type:"postback",
+				title:"Je SOS.",
+				payload:"JE_SOS"
+			},{
+				type:"postback",
+				title:"Liste les SOS.",
+				payload:"LISTE_SOS"
+			}])
+		}
+	}
+
+	getStatus(contact){
 		if (this.contacts.where(contactToCheck => contact.id === contactToCheck.id).length !== 0)
-			this.send(contact, "Tu appartiens à la team SOS.")
+			return "Tu appartiens à la team SOS."
 		else
-			this.send(contact, "Tu n'appartiens pas à la team SOS.")
+			return "Tu n'appartiens pas à la team SOS."
 	}
 
 	sendAll(message){
