@@ -22,10 +22,7 @@ class Bot{
 		})
 
 		httpServer.app.post('/webhook', (req, res) => {
-			console.log(req)
 			const data = req.body
-
-			console.log(data)
 
 			// Make sure this is a page subscription
 			if (data.object === 'page') {
@@ -41,6 +38,7 @@ class Bot{
 							console.log('Message reçu.')
 							console.log(event.message)
 							this.addContact(event.sender.id)
+							this.notifyAll()
 						} else {
 							console.log("Webhook received unknown event: ", event)
 						}
@@ -62,7 +60,6 @@ class Bot{
 
 			this.messenger.sendTextMessage(contact, 'SOS-Bot à votre service !', (err, body) => {
 				if(err) return console.error(err)
-				console.log(body)
 			})
 
 		})
