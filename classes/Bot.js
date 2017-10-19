@@ -24,6 +24,8 @@ class Bot{
 		httpServer.app.post('/webhook', (req, res) => {
 			var data = req.body
 
+			console.log('data')
+
 			// Make sure this is a page subscription
 			if (data.object === 'page') {
 
