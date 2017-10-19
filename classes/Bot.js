@@ -68,7 +68,7 @@ class Bot{
 				break
 
 			case 'status':
-				if this.contacts.where(contact => contact.id === event.sender.id).length !== 0
+				if (this.contacts.where(contact => contact.id === event.sender.id).length !== 0)
 					this.send(event.contact, "Tu appartiens à la team SOS.")
 				else
 					this.send(event.contact, "Tu n'appartiens pas à la team SOS.")
