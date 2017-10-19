@@ -76,7 +76,7 @@ class Bot{
 				
 
 			default:
-				this.send(event.contact, 'Commandes:\nje sos\njs ne sos plus\lstatus')
+				this.send(event.sender, 'Commandes:\nje sos\njs ne sos plus\lstatus')
 		}
 	}
 
