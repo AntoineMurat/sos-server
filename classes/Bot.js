@@ -1,6 +1,6 @@
 const FBMessenger = require('fb-messenger')
 const loki = require('lokijs')
-const db = new loki('db.json')
+const db = new loki('db.json', {autosave: true})
 
 class Bot{
 	constructor(httpServer, token, verifyToken){
