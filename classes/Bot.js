@@ -73,7 +73,7 @@ class Bot{
 					this.send(event.sender, "Tu appartiens à la team SOS.")
 				else
 					this.send(event.sender, "Tu n'appartiens pas à la team SOS.")
-				
+				break
 
 			default:
 				this.send(event.sender, 'Commandes:\nje sos\njs ne sos plus\nstatus')
