@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EDT Ensimag</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+	<meta charset="UTF-8">
+
+	<!-- jQuery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/magnifik.min.js"></script>
+
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css" media="screen,projection">
+
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js"></script>
+
+	<link href="css/stylesheet.css" rel="stylesheet">
+	<script src="js/main.js"></script>
+
+	<!-- Global Site Tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-45386037-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || []
+		function gtag(){dataLayer.push(arguments)}
+		gtag('js', new Date())
+		gtag('config', 'UA-45386037-1')
+	</script>
+</head>
+<body>
+	<nav>
+		<div class="nav-wrapper green">
+			<a href="#!" class="brand-logo center">EDT Ensimag</a>
+			<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+			<!-- Left Sidenav -->
+			<ul id="slide-out" class="side-nav">
+				<li class="no-padding">
+					<ul class="collapsible collapsible-accordion">
+						<li>
+							<a class="collapsible-header update-annee"><span>Année</span><i class="material-icons">arrow_drop_down</i></a>
+							<div class="collapsible-body">
+								<ul class="list-annees"></ul>
+							</div>
+						</li>
+					</ul>
+				</li>
+				<li class="no-padding">
+					<ul class="collapsible collapsible-accordion">
+						<li>
+							<a class="collapsible-header update-groupe"><span>Groupe</span><i class="material-icons">arrow_drop_down</i></a>
+							<div class="collapsible-body">
+								<ul class="list-groups"></ul>
+							</div>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="right hide-on-med-and-down">
+				<li><a class="dropdown-button update-annee" href="#!" data-activates="dropAnneeFullscreen"><span>Année</span><i class="material-icons right">arrow_drop_down</i></a></li>
+				<ul id='dropAnneeFullscreen' class='dropdown-content list-annees'></ul>
+				<li><a class="dropdown-button update-groupe" href="#!" data-activates="dropGroupeFullscreen"><span>Groupe</span><i class="material-icons right">arrow_drop_down</i></a></li>
+				<ul id='dropGroupeFullscreen' class='dropdown-content list-groups'></ul>
+			</ul>
+		</div>
+	</nav>
+	<div class="center">
+		<div id="preloader" class="preloader-wrapper big active">
+			<div class="spinner-layer spinner-green-only">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div><div class="gap-patch">
+					<div class="circle"></div>
+				</div><div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+
+		<a class="magnifik">
+			<img id="edt">
+		</a>
+
+		<ul class="pagination">
+
+		</ul>
+	</div>
+
+</body>
+</html>
