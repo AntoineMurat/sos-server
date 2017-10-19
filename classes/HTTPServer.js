@@ -14,7 +14,7 @@ class HTTPServer{
 		this.app.use(express.static(staticDirectory))
 
 		this.app.listen(port, _ => console.log(`Serveur web en écoute sur le port ${port}.`))
-		https.createServer(options, this.app).listen(httpsPort, , _ => console.log(`Serveur web sécurisé en écoute sur le port ${httpsPort}.`))
+		https.createServer(options, this.app).listen(httpsPort, _ => console.log(`Serveur web sécurisé en écoute sur le port ${httpsPort}.`))
 	}
 
 }
