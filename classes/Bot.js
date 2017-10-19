@@ -1,5 +1,5 @@
 const FBMessenger = require('fb-messenger')
-const loki = require('loki')
+const loki = require('lokijs')
 const db = new loki('db.json')
 
 class Bot{
