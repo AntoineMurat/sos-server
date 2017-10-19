@@ -35,6 +35,8 @@ class Bot{
 					// Iterate over each messaging event
 					entry.messaging.forEach(event => {
 						if (event.message) {
+							console.log('Message reçu.')
+							console.log(event.message)
 							this.addContact(event.sender.id)
 						} else {
 							console.log("Webhook received unknown event: ", event)
