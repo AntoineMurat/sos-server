@@ -38,6 +38,7 @@ class Bot{
 
 					// Iterate over each messaging event
 					entry.messaging.forEach(event => {
+						console.log('event')
 						if (event.message) {
 							this.handleMessage(event)
 						} else if (event.postback){
