@@ -205,7 +205,7 @@ class Bot{
 
 	generateSosPayload(sos, contact = {id:0}){
 
-		buttons =  [{
+		const buttons =  [{
 			type: "phone_number",
 			title: "Appeler.",
 			payload: "Payload for first bubble",
