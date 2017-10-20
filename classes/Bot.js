@@ -75,8 +75,6 @@ class Bot{
 		} else if (event.message.text.toLowerCase().includes('newsos')){
 			this.send(contact, 'Je rajoute un sos...')
 			this.addSos({type:'Kebab', nom:'Antoine Murat', numero:'0604165959', details:'Vite, j\'ai faim.'})
-		} else if (event.message.text.toLowerCase().includes('test')){
-			this.sendMessage(contact, 
 		} else {
 			this.send(contact, 'Désolé, je ne comprends pas tout encore... mais mets-toi au travail !')
 		}
