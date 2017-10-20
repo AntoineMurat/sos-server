@@ -88,9 +88,9 @@ class Bot{
 		if (event.postback.payload.startsWith('INSCRIRE_SOS:')){
 			const sos = this.getSosById(event.postback.payload.split(':')[1])
 			if (sos.contact !== false){
-				send(contact, 'Ah, quelqu\'un a déjà récupéré le SOS...')
+				this.send(contact, 'Ah, quelqu\'un a déjà récupéré le SOS...')
 			} else if (sos.fini === true) {
-				send(contact, 'Ah, quelqu\'un a mis fin à ce SOS...')
+				this.send(contact, 'Ah, quelqu\'un a mis fin à ce SOS...')
 			} else {
 				sos.contactId = contact.id
 				this.sendSos(contact, [sos])
