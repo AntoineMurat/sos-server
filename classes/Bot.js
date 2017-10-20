@@ -75,6 +75,8 @@ class Bot{
 		} else if (event.message.text.toLowerCase().includes('newsos')){
 			this.send(contact, 'Je rajoute un sos...')
 			this.addSos({type:'Kebab', nom:'Antoine Murat', numero:'0604165959', details:'Vite, j\'ai faim.'})
+		} else if (event.message.text.includes('🐸')){
+			this.send(contact, '🐸🐸🐸')
 		} else {
 			this.send(contact, 'Désolé, je ne comprends pas tout encore... mais mets-toi au travail !')
 		}
@@ -113,6 +115,7 @@ class Bot{
 				break
 			case 'JE_NE_SOS_PLUS':
 				contact.sos = false
+				this.sos.where(aSos => aSos.fini === false && aSos.contactId === contact.id).forEach(aSos => aSos.contactId = false)
 				this.send(contact, 'Repose-toi bien khey !')
 				break
 			case 'LISTE_SOS':
