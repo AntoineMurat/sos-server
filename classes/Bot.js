@@ -12,6 +12,8 @@ class Bot{
 			if (err)
 			    return console.log("error : " + err)
 
+			console.log('Database loaded.')
+
 			// Création des collections si BDD vide.
 			this.contacts = db.getCollection('contacts') || db.addCollection('contacts')
 			this.sos = db.getCollection('sos') || db.addCollection('sos')
@@ -73,6 +75,8 @@ class Bot{
 		} else if (event.message.text.toLowerCase().includes('newsos')){
 			this.send(contact, 'Je rajoute un sos...')
 			this.addSos({type:'Kebab', nom:'Antoine Murat', numero:'0604165959', details:'Vite, j\'ai faim.'})
+		} else if (event.message.text.toLowerCase().includes('test')){
+			this.sendMessage(contact, 
 		} else {
 			this.send(contact, 'Désolé, je ne comprends pas tout encore... mais mets-toi au travail !')
 		}
@@ -172,9 +176,11 @@ class Bot{
 	}
 
 	sendSos(contact, sos){
+
+		const elements = sos.map(aSos => this.generateSosPayload(aSos, contact))
+
 		this.messenger.sendMessage(
-			contact.id, 
-			'{attachment: {type: "template", payload: {template_type: "generic", elements: [' + sos.map(aSos => JSON.stringify(this.generateSosPayload(aSos, contact))).join(',') + ']}}}')
+			contact.id, {attachment: {type: 'template', payload: {template_type: 'generic', elements: elements}}})
 	}
 
 	getContact(sender){
