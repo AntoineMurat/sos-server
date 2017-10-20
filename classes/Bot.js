@@ -8,8 +8,8 @@ class Bot{
 		this.httpServer = httpServer
 
 		// Chargement de la BDD.
-		this.contacts = db.getCollection('contacts') || db.addCollection('contacts')
-		this.sos = db.getCollection('sos') || db.addCollection('sos')
+		this.contacts = db.getCollection('contacts') // || db.addCollection('contacts')
+		this.sos = db.getCollection('sos') // || db.addCollection('sos')
 
 		this.messenger = new FBMessenger(token)
 		this.setupHook(httpServer, verifyToken)
