@@ -177,7 +177,6 @@ class Bot{
 			return contacts[0]
 		sender.sos = false
 		this.send(sender, 'Salut petit nouveau, n\'oublie pas de t\'inscrire aux SOS !')
-		this.send(sender, 'Hop hop hop, au travail !')
 		return this.contacts.insert(sender)
 	}
 
