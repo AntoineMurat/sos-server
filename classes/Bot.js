@@ -1,5 +1,6 @@
 const FBMessenger = require('fb-messenger')
 const loki = require('lokijs')
+const crypto = require("crypto")
 const db = new loki('db.json', {autosave: true})
 
 class Bot{
@@ -8,6 +9,7 @@ class Bot{
 
 		// Chargement de la BDD.
 		this.contacts = db.getCollection('contacts') || db.addCollection('contacts')
+		this.sos = db.getCollection('sos') || db.addCollection('sos')
 
 		this.messenger = new FBMessenger(token)
 		this.setupHook(httpServer, verifyToken)
@@ -38,11 +40,10 @@ class Bot{
 
 					// Iterate over each messaging event
 					entry.messaging.forEach(event => {
-						console.log('event')
 						if (event.message) {
-							this.handleMessage(event)
+							this.handleMessage(this.getContact(event.sender), event)
 						} else if (event.postback){
-							this.handlePostback(event)
+							this.handlePostback(this.getContact(event.sender), event)
 						} else {
 							console.log("Webhook received unknown event: ", event)
 						}
@@ -59,38 +60,56 @@ class Bot{
 		})
 	}
 
-	handleMessage(event){
-		console.log('Message reçu.')
+	handleMessage(contact, event){
 
-		switch(event.message.text){
-			case 'Je sos':
-			case 'je sos':
-				this.addContact(event.sender)
-				break
-
-			case 'Je ne sos plus':
-			case 'je ne sos plus':
-				this.removeContact(event.sender)
-				break
+		if (event.message.text.toLowerCase().includes('salut')){
+			this.send(contact, 'Salut ! Pas de temps à perdre, on SOS !')
+		} else if (event.message.text.toLowerCase().includes('newsos')){
+			this.send(contact, 'Je rajoute un sos...')
+			this.addSos({type:'Kebab', nom:'Antoine Murat', numero:'0604165959', details:'Vite, j\'ai faim.'})
+		} else {
+			this.send(contact, 'Désolé, je ne comprends pas tout encore... mais mets-toi au travail !')
 		}
 
-		this.sendMainMenu(event.sender)
+		this.sendMainMenu(contact)
 	}
 
-	handlePostback(event){
+	handlePostback(contact, event){
 		console.log(event.postback)
-		switch(event.postback.payload){
-			case 'JE_SOS':
-				this.addContact(event.sender)
-				break
-			case 'JE_NE_SOS_PLUS':
-				this.removeContact(event.sender)
-				break
-			case 'LISTE_SOS':
-				this.send(event.sender, 'Non implémenté')
+
+		if (event.postback.payload.startsWith('INSCRIRE_SOS:')){
+			const sos = this.getSosById(event.postback.payload.split(':')[1])
+			if (sos.contact !== false){
+				send(contact, 'Ah, quelqu\'un a déjà récupéré le SOS...')
+			} else if (sos.fini === true) {
+				send(contact, 'Ah, quelqu\'un a mis fin à ce SOS...')
+			} else {
+				sos.contactId = contact.id
+				this.sendSos(contact, [sos])
+			}
+		} else if (event.postback.payload.startsWith('ABANDONNER_SOS:')){
+			const sos = this.getSosById(event.postback.payload.split(':')[1])
+			sos.contactId = false
+		} else if (event.postback.payload.startsWith('TERMINER_SOS:')){
+			const sos = this.getSosById(event.postback.payload.split(':')[1])
+			sos.fini = true
 		}
 
-		this.sendMainMenu(event.sender)
+		switch(event.postback.payload){
+			case 'JE_SOS':
+				contact.sos = true
+				break
+			case 'JE_NE_SOS_PLUS':
+				contact.sos = false
+				break
+			case 'LISTE_SOS':
+				this.sendAllSos(contact)
+				break
+			case 'LISTE_MES_SOS':
+				this.sendMySos(contact)
+		}
+
+		this.sendMainMenu(contact)
 	}
 
 	send(contact, message){
@@ -100,9 +119,15 @@ class Bot{
 		})
 	}
 
+	sendAll(message){
+		this.contacts.forEach(contact => {
+			this.send(contact, message)
+		})
+	}
+
 	sendMainMenu(contact){
-		if (this.getStatus(contact) === "Tu appartiens à la team SOS."){
-			this.messenger.sendButtonsMessage(contact.id, this.getStatus(contact), [{
+		if (contact.sos){
+			this.messenger.sendButtonsMessage(contact.id, "Tu appartiens à la team SOS.", [{
 				type:"postback",
 				title:"Je ne SOS plus...",
 				payload:"JE_NE_SOS_PLUS"
@@ -110,9 +135,13 @@ class Bot{
 				type:"postback",
 				title:"Liste les SOS.",
 				payload:"LISTE_SOS"
+			},{
+				type:"postback",
+				title:"Liste mes SOS.",
+				payload:"LISTE_MES_SOS"
 			}])
 		} else {
-			this.messenger.sendButtonsMessage(contact.id, this.getStatus(contact), [{
+			this.messenger.sendButtonsMessage(contact.id, "Tu n'appartiens pas à la team SOS.", [{
 				type:"postback",
 				title:"Je SOS.",
 				payload:"JE_SOS"
@@ -124,25 +153,90 @@ class Bot{
 		}
 	}
 
-	getStatus(contact){
-		if (this.contacts.where(contactToCheck => contact.id === contactToCheck.id).length !== 0)
-			return "Tu appartiens à la team SOS."
+	sendAllSos(contact){
+		this.sendSos(contact, this.getFreeSos())
+	}
+
+	sendMySos(contact){
+		this.sendSos(contact, this.getSosByContact(contact))
+	}
+
+	sendSos(contact, sos){
+		this.messenger.sendMessage(
+			contact.id, 
+			'{attachment: {type: "template", payload: {template_type: "generic", elements: [' + sos.map(aSos => JSON.stringify(this.generateSosPayload(aSos, contact))).join(',') + ']}}}')
+	}
+
+	getContact(sender){
+		const contacts = this.contacts.where(contact => contact.id === sender.id)
+		if (contacts.length !== 0)
+			return contacts[0]
+		sender.sos = false
+		this.send(sender, 'Salut petit nouveau, n\'oublie pas de t\'inscrire aux SOS !')
+		this.send(sender, 'Hop hop hop, au travail !')
+		return this.contacts.insert(sender)
+	}
+
+	addSos(sos){
+		/*sos = {
+			type:"",
+			nom:"",
+			numero:"",
+			details:""
+		}*/
+
+		sos.contactId = false
+		sos.fini = false
+		sos.id = crypto.randomBytes(16).toString("hex")
+		return this.sos.insert(sos)
+	}
+
+	getFreeSos(){
+		return this.sos.where(sos => sos.contactId === false && sos.fini === false)
+	}
+
+	getSosByContact(contact){
+		return this.sos.where(sos => sos.contactId === contact.id && sos.fini === false)
+	}
+
+	getSosById(id){
+		return this.sos.by('id', id)[0]
+	}
+
+	generateSosPayload(sos, contact = {id:0}){
+
+		buttons =  [{
+			type: "phone_number",
+			title: "Appeler.",
+			payload: "Payload for first bubble",
+		}]
+
+		if (sos.contactId === contact.id)
+			buttons.push({
+				type: "postback",
+				title: "Abandonner",
+				payload: "ABANDONNER_SOS:"+sos.id
+			})
 		else
-			return "Tu n'appartiens pas à la team SOS."
-	}
+			buttons.push({
+				type: "postback",
+				title: "Accepter",
+				payload: "INSCRIRE_SOS:"+sos.id
+			})
 
-	sendAll(message){
-		this.contacts.forEach(contact => {
-			this.send(contact, message)
+		buttons.push({
+			type: "postback",
+			title: "Supprimer",
+			payload: "TERMINER_SOS:"+sos.id
 		})
-	}
 
-	addContact(contact){
-		this.contacts.insert(contact)
-	}
-
-	removeContact(contact){
-		this.contacts.removeWhere(contactToCheck => contact.id === contactToCheck.id)
+		return {
+			title: sos.type,
+			subtitle: sos.details,
+			item_url: "https://www.oculus.com/en-us/rift/",               
+			image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+			buttons: buttons
+		}
 	}
 }
 

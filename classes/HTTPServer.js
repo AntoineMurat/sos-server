@@ -3,9 +3,13 @@ const https = require('https')
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const options = {
-    cert: fs.readFileSync('./sslcert/fullchain.pem'),
-    key: fs.readFileSync('./sslcert/privkey.pem')
+const debug = process.argv.includes('--debug') || process.argv.includes('-debug')
+
+if (!debug){
+	const options = {
+		cert: fs.readFileSync('./sslcert/fullchain.pem'),
+		key: fs.readFileSync('./sslcert/privkey.pem')
+	}
 }
 
 class HTTPServer{
@@ -20,7 +24,9 @@ class HTTPServer{
 		this.app.use(express.static(staticDirectory))
 
 		this.app.listen(port, _ => console.log(`Serveur web en écoute sur le port ${port}.`))
-		https.createServer(options, this.app).listen(httpsPort, _ => console.log(`Serveur web sécurisé en écoute sur le port ${httpsPort}.`))
+
+		if (!debug)
+			https.createServer(options, this.app).listen(httpsPort, _ => console.log(`Serveur web sécurisé en écoute sur le port ${httpsPort}.`))
 	}
 
 }
