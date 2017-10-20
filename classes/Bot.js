@@ -90,26 +90,30 @@ class Bot{
 		} else if (event.postback.payload.startsWith('ABANDONNER_SOS:')){
 			const sos = this.getSosById(event.postback.payload.split(':')[1])
 			sos.contactId = false
+			this.send(contact, 'C\'est noté ! Envoie-moi un message pour trouver du taf\' !')
 		} else if (event.postback.payload.startsWith('TERMINER_SOS:')){
 			const sos = this.getSosById(event.postback.payload.split(':')[1])
 			sos.fini = true
+			this.send(contact, 'Un de moins ! Envoie-moi un message pour trouver du taf\' !')
 		}
 
 		switch(event.postback.payload){
 			case 'JE_SOS':
 				contact.sos = true
+				this.send(contact, 'Nickel ! Envoie-moi un message pour trouver du taf\' ! Tu seras notifié des nouveaux SOS !')
+				setTimeout(_ => this.sendAllSos(contact), 5000)
 				break
 			case 'JE_NE_SOS_PLUS':
 				contact.sos = false
+				this.send(contact, 'Repose-toi bien khey !')
 				break
 			case 'LISTE_SOS':
 				this.sendAllSos(contact)
 				break
 			case 'LISTE_MES_SOS':
+				this.send(contact, 'Voyons voir si tu as du travail...')
 				this.sendMySos(contact)
 		}
-
-		this.sendMainMenu(contact)
 	}
 
 	send(contact, message){
