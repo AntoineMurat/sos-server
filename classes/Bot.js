@@ -205,7 +205,7 @@ class Bot{
 
 		this.contacts.where(contact => contact.sos === true).forEach(contact => {
 			this.send(contact, 'Debout, les chômeurs, y\'a du nouveau... !')
-			this.sendSos(contact, newSos)
+			this.sendSos(contact, [newSos])
 		})
 
 		return newSos
