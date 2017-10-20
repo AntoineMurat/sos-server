@@ -85,9 +85,9 @@ class Bot{
 	handlePostback(contact, event){
 		console.log(event.postback)
 
-		if (event.postback.payload.startsWith('INSCRIRE_SOS:')){
+		if (event.postback.payload.startsWith('ACCEPTER_SOS:')){
 			const sos = this.getSosById(event.postback.payload.split(':')[1])
-			if (sos.contact !== false){
+			if (sos.contactId !== false){
 				this.send(contact, 'Ah, quelqu\'un a déjà récupéré le SOS...')
 			} else if (sos.fini === true) {
 				this.send(contact, 'Ah, quelqu\'un a mis fin à ce SOS...')
@@ -201,7 +201,14 @@ class Bot{
 		sos.contactId = false
 		sos.fini = false
 		sos.id = crypto.randomBytes(16).toString("hex")
-		return this.sos.insert(sos)
+		const newSos = this.sos.insert(sos)
+
+		this.contacts.where(contact => contact.sos === true).forEach(contact => {
+			this.send(contact, 'Debout, les chômeurs, y\'a du nouveau... !')
+			this.sendSos(contact, newSos)
+		})
+
+		return newSos
 	}
 
 	getFreeSos(){
@@ -220,8 +227,8 @@ class Bot{
 
 		const buttons =  [{
 			type: "phone_number",
-			title: "Appeler.",
-			payload: "Payload for first bubble",
+			title: "Appeler",
+			payload: sos.numero,
 		}]
 
 		if (sos.contactId === contact.id)
@@ -234,7 +241,7 @@ class Bot{
 			buttons.push({
 				type: "postback",
 				title: "Accepter",
-				payload: "INSCRIRE_SOS:"+sos.id
+				payload: "ACCEPTER_SOS:"+sos.id
 			})
 
 		buttons.push({
@@ -246,8 +253,8 @@ class Bot{
 		return {
 			title: sos.type,
 			subtitle: sos.details,
-			item_url: "https://www.oculus.com/en-us/rift/",               
-			image_url: "http://messengerdemo.parseapp.com/img/rift.png",
+			// item_url: "https://www.oculus.com/en-us/rift/",               
+			image_url: "http://cdn1.zfood.co.uk/352/images/kebab.png",
 			buttons: buttons
 		}
 	}
