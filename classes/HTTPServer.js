@@ -5,8 +5,10 @@ const bodyParser = require('body-parser')
 
 const debug = process.argv.includes('--debug') || process.argv.includes('-debug')
 
+let options = {}
+
 if (!debug){
-	const options = {
+	options = {
 		cert: fs.readFileSync('./sslcert/fullchain.pem'),
 		key: fs.readFileSync('./sslcert/privkey.pem')
 	}
