@@ -213,7 +213,7 @@ class Bot{
 	}
 
 	getSosById(id){
-		return this.sos.by('id', id)[0]
+		return this.sos.where(aSos => aSos.id === id)[0]
 	}
 
 	generateSosPayload(sos, contact = {id:0}){
