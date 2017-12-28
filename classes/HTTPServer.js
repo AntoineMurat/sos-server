@@ -3,11 +3,11 @@ const https = require('https')
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const debug = process.argv.includes('--debug') || process.argv.includes('-debug')
+const nohttps = process.argv.includes('--nohttps') || process.argv.includes('-nohttps')
 
 let options = {}
 
-if (!debug){
+if (!nohttps){
 	options = {
 		cert: fs.readFileSync('./sslcert/fullchain.pem'),
 		key: fs.readFileSync('./sslcert/privkey.pem')
@@ -16,7 +16,9 @@ if (!debug){
 
 class HTTPServer{
 
-	constructor(port = 80, httpsPort = 443, staticDirectory = './../static/'){
+	constructor(db, port = 80, httpsPort = 443, staticDirectory = './../static/'){
+
+		this.db = db
 
 		this.app = express()
 		// parse application/x-www-form-urlencoded
@@ -25,9 +27,15 @@ class HTTPServer{
 		this.app.use(bodyParser.json())
 		this.app.use(express.static(staticDirectory))
 
+		this.app.use((req, res, next) => {
+			res.header("Access-Control-Allow-Origin", "*");
+			res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+			next()
+		})
+
 		this.app.listen(port, _ => console.log(`Serveur web en écoute sur le port ${port}.`))
 
-		if (!debug)
+		if (!nohttps)
 			https.createServer(options, this.app).listen(httpsPort, _ => console.log(`Serveur web sécurisé en écoute sur le port ${httpsPort}.`))
 	}
 
