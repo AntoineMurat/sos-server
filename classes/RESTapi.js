@@ -26,6 +26,8 @@ class RESTApi{
 		app.get('/contacts/', getHandlers.allContacts.bind(this))
 		app.get('/contacts/sosing/', getHandlers.contactsSosing.bind(this))
 		app.get('/contacts/:id/', getHandlers.contactById.bind(this))
+
+		app.get('*', (req, res) => res.sendFile('index.html', { root: httpServer.staticDirectory }))
 	}
 }
 

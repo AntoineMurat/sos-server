@@ -41,6 +41,9 @@ class SosRepository extends Repository{
 		if (typeof sos.type === 'undefined')
 			sos.type = 'Type unspecified'
 
+		if (typeof sos.coordonnees === 'undefined')
+			sos.coordonnees = {}
+
 		remplirCoordonnees(sos, 'firstname')
 		remplirCoordonnees(sos, 'lastname')
 		remplirCoordonnees(sos, 'phone')

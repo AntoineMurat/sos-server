@@ -13,7 +13,10 @@ module.exports = function(req, res){
   .then(_ => buildSos(form))
   .then(sos => addSos.bind(this)(sos))
   .then(_ => res.json({error: false}))
-  .catch(error => res.json({error: error}))
+  .catch(error => {
+    res.json({error: error})
+    console.log(error)
+  })
 }
 
 const checkRecaptcha = response => new Promise((resolve, reject) => {
@@ -88,7 +91,7 @@ const buildSos = form => new Promise((resolve, reject) => {
   const sos = {
     type: form.type,
     options: form.options,
-    Coordonnees: form.coordonnees
+    coordonnees: form.coordonnees
   }
   resolve(sos)
 })

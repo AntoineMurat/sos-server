@@ -19,6 +19,7 @@ class HTTPServer{
 	constructor(db, port = 80, httpsPort = 443, staticDirectory = './../static/'){
 
 		this.db = db
+		this.staticDirectory = staticDirectory
 
 		this.app = express()
 		// parse application/x-www-form-urlencoded
