@@ -173,6 +173,7 @@ class Bot{
 
 	sendAllSos(contact){
 		const sos = this.sosRepository.getFree()
+		console.log(sos)
 		if (sos)
 			return this.sendSos(contact, sos)
 		this.send(contact, 'Aucun SOS en attente.')
