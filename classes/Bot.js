@@ -94,7 +94,7 @@ class Bot{
 			// Si qqn ne veut plus SOS :
 			case 'JE_NE_SOS_PLUS':
 				contact.sos = false
-				this.sos.where(aSos => aSos.fini === false && aSos.contactId === contact.id).forEach(aSos => aSos.contactId = false)
+				this.sosRepository.where(aSos => aSos.fini === false && aSos.contactId === contact.id).forEach(aSos => aSos.contactId = false)
 				this.send(contact, 'Repose-toi bien !')
 				break
 			// Si qqn veut voir les SOS :
