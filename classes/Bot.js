@@ -219,7 +219,7 @@ class Bot{
 		const buttons =  [{
 			type: "phone_number",
 			title: `Appeler ${sos.coordonnees.phone}`,
-			payload: sos.coordonnees.numero,
+			payload: sos.coordonnees.phone,
 		}]
 
 		if (sos.contactId === contact.id)
