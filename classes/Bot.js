@@ -233,7 +233,7 @@ class Bot{
 		let details = sos.coordonnees.address
 
 		if (contact.id !== 0){
-			dist = distance(sos.coordonnees.coordinates, contact.home).toFixed(3)
+			const dist = distance(sos.coordonnees.coordinates, contact.home).toFixed(3)
 			details += ', '+dist+'km'
 		}
 
