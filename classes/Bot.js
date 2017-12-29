@@ -240,15 +240,11 @@ class Bot{
 		const lat = sos.coordonnees.coordinates.lat,
 					lng = sos.coordonnees.coordinates.lng
 
-		console.log(`https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=13&size=400x200&maptype=roadmap&markers=color:red%7C${lat},${lng}&key=${MAPS_API_KEY}`)
-
 		return {
 			title: sos.type,
 			subtitle: details,
 			// item_url: "https://www.oculus.com/en-us/rift/",
-			/*image_url: `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=13&size=400x200&maptype=roadmap
-				&markers=color:red%7C${lat},${lng}
-				&key=${MAPS_API_KEY}`,*/
+			image_url: `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=13&size=400x200&maptype=roadmap&markers=color:red%7C${lat},${lng}&key=${MAPS_API_KEY}`,
 			buttons: buttons
 		}
 	}
