@@ -19,6 +19,7 @@ class RESTApi{
 		app.get('/sos/free/', getHandlers.sosFree.bind(this))
 		app.get('/sos/todo/', getHandlers.sosTodo.bind(this))
 		app.get('/sos/done/', getHandlers.sosDone.bind(this))
+		app.get('/sos/supprimer/:id/', getHandlers.deleteById.bind(this))
 		app.get('/sos/:id/', getHandlers.sosById.bind(this))
 
 		app.post('/sos/new/', newSosController.bind(this))

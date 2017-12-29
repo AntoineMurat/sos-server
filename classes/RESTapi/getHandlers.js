@@ -39,6 +39,10 @@ module.exports.sosDone = function(req, res) {
   sendJson(res, this.sosRepository.getDone())
 }
 
+module.exports.deleteById = function(req, res) {
+  sendJson(res, { error: this.bot.supprimerSos(req.params.id) })
+}
+
 module.exports.sosById = function(req, res) {
   sendJson(res, this.sosRepository.getById(req.params.id))
 }

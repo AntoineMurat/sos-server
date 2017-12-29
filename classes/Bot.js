@@ -76,12 +76,10 @@ class Bot{
 			this.send(contact, 'C\'est noté ! Envoie-moi un message pour trouver du taf\' !')
 		// Si on veut mettre fin à un SOS :
 		} else if (event.postback.payload.startsWith('TERMINER_SOS:')){
-			const sos = this.sosRepository.getById(event.postback.payload.split(':')[1])
-			sos.fini = true
-			const contactToFree = this.contactRepository.getById(sos.contactId)
-			if (contactToFree)
-				contactToFree.free = true
-			this.send(contact, 'Un de moins ! Envoie-moi un message pour trouver du taf\' !')
+			const ret = this.supprimerSos(event.postback.payload.split(':')[1])
+			if (ret)
+				return this.send(contact, 'Un de moins ! Envoie-moi un message pour trouver du taf\' !')
+			return this.send(contact, `Le Sos n'a pas pu être supprimé.`)
 		}
 
 		switch(event.postback.payload){
@@ -202,6 +200,16 @@ class Bot{
 		.forEach(contact => this.sendSos(contact, [newSos]))
 
 		return newSos
+	}
+
+	supprimerSos(sosId){
+		const sos = this.sosRepository.getById(sosId)
+		if (!sos) return false
+		sos.fini = true
+		const contactToFree = this.contactRepository.getById(sos.contactId)
+		if (contactToFree)
+			contactToFree.free = true
+		return true
 	}
 
 	generateSosPayload(sos, contact = {id:0}){
