@@ -203,10 +203,12 @@ class Bot{
 
 	generateSosPayload(sos, contact = {id:0}){
 
+		MAPS_API_KEY = 'AIzaSyDtplS_deG2E2wTIvHhWbgW7cPwr5Rq_Jc'
+
 		const buttons =  [{
 			type: "phone_number",
-			title: "Appeler",
-			payload: sos.numero,
+			title: `Appeler ${sos.coordonnees.numero}`,
+			payload: sos.coordonnees.numero,
 		}]
 
 		if (sos.contactId === contact.id)
@@ -228,14 +230,43 @@ class Bot{
 			payload: "TERMINER_SOS:"+sos.id
 		})
 
+		let details = sos.coordonnees.address
+
+		if (contact.id !== 0){
+			dist = distance(sos.coordonnees.coordinates, contact.home).toFixed(3)
+			details += ', '+dist+'km'
+		}
+
+		const lat = sos.coordonnees.coordinates.lat,
+					lng = sos.coordonnees.coordinates.lng
+
 		return {
 			title: sos.type,
-			subtitle: sos.details,
+			subtitle: details,
 			// item_url: "https://www.oculus.com/en-us/rift/",
-			image_url: "http://cdn1.zfood.co.uk/352/images/kebab.png",
+			image_url: `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=13&size=400x200&maptype=roadmap
+				&markers=color:red%7C${lat},${lng}
+				&key=${MAPS_API_KEY}`,
 			buttons: buttons
 		}
 	}
+}
+
+const distance = (dest, center) => {
+	const degreesToRadians = degrees => degrees * Math.PI / 180
+	const earthRadiusKm = 6371
+
+	const dLat = degreesToRadians(center.lat-dest.lat)
+	const dLon = degreesToRadians(center.lng-dest.lng)
+
+	const lat1 = degreesToRadians(center.lat)
+	const lat2 = degreesToRadians(dest.lat)
+
+	const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+						Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2)
+	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	const distance = earthRadiusKm * c
+	return distance
 }
 
 module.exports = Bot
