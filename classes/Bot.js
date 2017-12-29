@@ -37,7 +37,7 @@ class Bot{
 		console.log(event.message)
 
 		// Si gps, on setHome.
-		if (event.message.attachments.length > 0
+		if (event.message.attachments
 			&& event.message.attachments[0].payload
 			&& event.message.attachments[0].payload.coordinates
 			&& event.message.attachments[0].payload.coordinates.lat
