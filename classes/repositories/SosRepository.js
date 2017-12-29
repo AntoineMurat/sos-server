@@ -7,7 +7,7 @@ class SosRepository extends Repository{
 		super(db, 'sos')
 	}
 	getFree(){
-		return this.getWhere(sos => sos.contactId === null && !sos.fini)
+		return this.getWhere(sos => sos.contactId === false && !sos.fini)
 	}
 
 	getDone(){
@@ -15,7 +15,7 @@ class SosRepository extends Repository{
 	}
 
 	getTodo(){
-		return this.getWhere(sos => !sos.fini && sos.contactId !== null)
+		return this.getWhere(sos => !sos.fini && sos.contactId !== false)
 	}
 
 	getByContact(contact){
@@ -34,7 +34,7 @@ class SosRepository extends Repository{
 		if (typeof sos.id === 'undefined')
 			sos.id = crypto.randomBytes(16).toString("hex")
 		if (typeof sos.contactId === 'undefined')
-			sos.contactId = null
+			sos.contactId = false
 		if (typeof sos.fini === 'undefined')
 			sos.fini = false
 

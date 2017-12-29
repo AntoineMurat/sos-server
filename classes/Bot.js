@@ -172,7 +172,10 @@ class Bot{
 	}
 
 	sendAllSos(contact){
-		this.sendSos(contact, this.sosRepository.getFree())
+		const sos = this.sosRepository.getFree()
+		if (sos)
+			return this.sendSos(contact, sos)
+		this.send(contact, 'Aucun SOS en attente.')
 	}
 
 	sendMySos(contact){
