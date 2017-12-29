@@ -14,6 +14,22 @@ class Bot{
 		// Loading external methods.
 		this.setupHook = require('./Bot/setupHook')
 		this.setupHook(httpServer, verifyToken)
+
+		// A intervalle régulier, on notifie des SOS non gérés.
+		setInterval(_ => {
+			const contactsSos = new Map()
+			this.sosRepository.getFree().forEach(sos => {
+				this.contactRepository.getBestMatchesFor(sos).forEach(contact => {
+					if (!contactsSos.has(contact))
+						contactsSos.set(contact, [])
+					contactsSos.get(contact).push(sos)
+				})
+			})
+			contactsSos.forEach((sos, contact) => {
+				this.send(contact, 'Ces SOS sont encore à gérer :')
+				this.sendSos(contact, sos)
+			})
+		}, 1000 * 60 * 5)
 	}
 
 	handleMessage(contact, event){
@@ -21,9 +37,20 @@ class Bot{
 		console.log(event.message)
 
 		// Si gps, on setHome.
-
-		// Sinon on envoie le menu
-		this.sendMenu(contact)
+		if (event.message.attachments.length > 0
+			&& event.message.attachments[0].payload
+			&& event.message.attachments[0].payload.coordinates
+			&& event.message.attachments[0].payload.coordinates.lat
+		  && event.message.attachments[0].payload.coordinates.long){
+				contact.home = {
+					lat: event.message.attachments[0].payload.coordinates.lat,
+					lng: event.message.attachments[0].payload.coordinates.long
+				}
+				this.send(contact, 'Position MAJ !')
+		} else {
+			// Sinon on envoie le menu
+			this.sendMenu(contact)
+		}
 	}
 
 	handlePostback(contact, event){
@@ -61,14 +88,14 @@ class Bot{
 			// Si quelqu'un veut SOS :
 			case 'JE_SOS':
 				contact.sos = true
-				this.send(contact, 'Nickel ! Envoie-moi un message pour trouver du taf\' ! Tu seras notifié des nouveaux SOS !')
+				this.send(contact, 'Nickel ! Tu seras notifié des nouveaux SOS !')
 				setTimeout(_ => this.sendAllSos(contact), 1000)
 				break
 			// Si qqn ne veut plus SOS :
 			case 'JE_NE_SOS_PLUS':
 				contact.sos = false
 				this.sos.where(aSos => aSos.fini === false && aSos.contactId === contact.id).forEach(aSos => aSos.contactId = false)
-				this.send(contact, 'Repose-toi bien khey !')
+				this.send(contact, 'Repose-toi bien !')
 				break
 			// Si qqn veut voir les SOS :
 			case 'LISTE_SOS':
