@@ -203,7 +203,7 @@ class Bot{
 
 	generateSosPayload(sos, contact = {id:0}){
 
-		MAPS_API_KEY = 'AIzaSyDtplS_deG2E2wTIvHhWbgW7cPwr5Rq_Jc'
+		const MAPS_API_KEY = 'AIzaSyDtplS_deG2E2wTIvHhWbgW7cPwr5Rq_Jc'
 
 		const buttons =  [{
 			type: "phone_number",
