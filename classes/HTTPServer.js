@@ -16,7 +16,7 @@ if (!nohttps){
 
 class HTTPServer{
 
-	constructor(db, port = 80, httpsPort = 443, staticDirectory = './../static/'){
+	constructor(db, port = 80, httpsPort = 443, staticDirectory = './../public/'){
 
 		this.db = db
 		this.staticDirectory = staticDirectory

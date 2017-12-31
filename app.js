@@ -51,7 +51,7 @@ db.loadDatabase({}, err => {
 	if (err)
 	    return console.error("error : " + err)
 
-	const httpServer = new HTTPServer(db, 80, 443, './static')
+	const httpServer = new HTTPServer(db, 80, 443, './public')
 
 	if (noHTTPS)
 		console.warn('No HTTPS.')
