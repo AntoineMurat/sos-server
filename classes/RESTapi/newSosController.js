@@ -45,7 +45,7 @@ const checkDispo = form => new Promise((resolve, reject) => {
 })
 
 const checkSosType = form => new Promise((resolve, reject) => {
-  if (!typeSos.any(type => type.type === form.type))
+  if (!TypeSos.any(type => type.type === form.type))
     reject('Type de SOS inconnu !')
 
   resolve()
