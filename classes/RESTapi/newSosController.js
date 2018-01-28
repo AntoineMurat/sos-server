@@ -91,7 +91,7 @@ const checkRadius = form => new Promise((resolve, reject) => {
 })
 
 const buildSos = form => new Promise((resolve, reject) => {
-  if (eleves.inludes(form.coordonnees.firstname.toLowerCase() + ' ' + form.coordonnees.lastname.toLowerCase()))
+  if (eleves.includes(form.coordonnees.firstname.toLowerCase() + ' ' + form.coordonnees.lastname.toLowerCase()))
     form.coordonnees.ensimag = true
   else
     form.coordonnees.ensimag = false
