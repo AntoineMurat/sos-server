@@ -120,14 +120,11 @@ class Bot{
 
 	sendInfo(contact, sosId){
 		const sos = this.sosRepository.getById(sosId)
-		let message = ''
+		let message = 'Commentaire : ' + sos.comment
 		sos.options.forEach((key, value) => {
 			message += key + ' : ' + value +'\u000A'
 		})
-		this.messenger.sendTextMessage(contact.id, message, (err, body) => {
-			if (err) return console.error(err)
-			console.log(body)
-		})
+		this.send(contact, message)
 	}
 
 	sendAll(message){
@@ -188,7 +185,9 @@ class Bot{
 	}
 
 	sendAllSos(contact){
+		console.log('Début de l\'envoi de tous les sos au contact.')
 		const sos = this.sosRepository.getFree()
+		console.log('longueur ' + sos.length)
 		if (sos.length > 0)
 			return this.sendSos(contact, sos)
 		this.send(contact, 'Aucun SOS en attente.')
