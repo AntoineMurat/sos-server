@@ -121,9 +121,9 @@ class Bot{
 	sendInfo(contact, sosId){
 		const sos = this.sosRepository.getById(sosId)
 		let message = 'Commentaire : ' + sos.comment
-		sos.options.forEach((key, value) => {
-			message += key + ' : ' + value +'\u000A'
-		})
+		for (let optionCode in sos.options.forEach){
+			message += optionCode + ' : ' + sos.options[optionCode] +'\u000A'
+		}
 		this.send(contact, message)
 	}
 
@@ -194,7 +194,9 @@ class Bot{
 	}
 
 	sendMySos(contact){
-		this.sendSos(contact, this.sosRepository.getTodoByContact(contact))
+		const mySos = this.sosRepository.getTodoByContact(contact)
+		this.sendSos(contact, mySos)
+		this.sendInfo(contact, mySos.id)
 	}
 
 	sendSos(contact, sos){
@@ -233,30 +235,41 @@ class Bot{
 
 		const MAPS_API_KEY = 'AIzaSyDtplS_deG2E2wTIvHhWbgW7cPwr5Rq_Jc'
 
-		const buttons =  [{
-			type: "phone_number",
-			title: `Appeler ${sos.coordonnees.phone}`,
-			payload: sos.coordonnees.phone,
-		}]
+		const buttons =  []
 
-		if (sos.contactId === contact.id)
+		if (sos.contactId === contact.id){
+			buttons.push({
+				type: "phone_number",
+				title: `Appeler ${sos.coordonnees.phone}`,
+				payload: sos.coordonnees.phone,
+			})
 			buttons.push({
 				type: "postback",
 				title: "Libérer",
 				payload: "ABANDONNER_SOS:"+sos.id
 			})
-		else
+			buttons.push({
+				type: "postback",
+				title: "Mettre fin",
+				payload: "TERMINER_SOS:"+sos.id
+			})
+		} else {
 			buttons.push({
 				type: "postback",
 				title: "Accepter",
 				payload: "ACCEPTER_SOS:"+sos.id
 			})
-
-		buttons.push({
-			type: "postback",
-			title: "Plus d'infos",
-			payload: "PLUS_INFO:"+sos.id
-		})
+			buttons.push({
+				type: "postback",
+				title: "Plus d'infos",
+				payload: "PLUS_INFO:"+sos.id
+			})
+			buttons.push({
+				type: "postback",
+				title: "Mettre fin",
+				payload: "TERMINER_SOS:"+sos.id
+			})
+		}
 
 		let details = sos.coordonnees.address
 
