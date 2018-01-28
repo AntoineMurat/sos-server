@@ -58,7 +58,8 @@ class Bot{
 		if (event.postback.payload.startsWith('ACCEPTER_SOS:')){
 			const sos = this.sosRepository.getById(event.postback.payload.split(':')[1])
 			if (sos.contactId !== false){
-				this.send(contact, 'Ah, quelqu\'un a déjà récupéré le SOS...')
+				const autre = this.contactRepository.getById(sos.contactId)
+				this.send(contact, `Ah, ${autre.firstName} ${autre.lastName} a déjà récupéré ce SOS...`)
 			} else if (sos.fini === true) {
 				this.send(contact, 'Ah, quelqu\'un a mis fin à ce SOS...')
 			} else {

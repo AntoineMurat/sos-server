@@ -9,7 +9,7 @@ class ContactRepository extends Repository{
 	}
 
 	getBestMatchesFor(sos, limit=5){
-		return this.getSosing()
+		return this.getDispo()
 	}
 
 	getDispo(){
