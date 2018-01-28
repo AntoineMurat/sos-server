@@ -56,6 +56,7 @@ class Bot{
 	handlePostback(contact, event){
 		// Si on veut accepter un SOS :
 		if (event.postback.payload.startsWith('ACCEPTER_SOS:')){
+			if (!contact.free) return this.send(contact, 'Commence par finir ton SOS en cours !')
 			const sos = this.sosRepository.getById(event.postback.payload.split(':')[1])
 			if (sos.contactId !== false){
 				const autre = this.contactRepository.getById(sos.contactId)
@@ -98,6 +99,7 @@ class Bot{
 				break
 			// Si qqn ne veut plus SOS :
 			case 'JE_NE_SOS_PLUS':
+				if (!contact.free) return this.send(contact, 'Commence par finir ton SOS en cours !')
 				contact.sos = false
 				this.sosRepository.getWhere(aSos => aSos.fini === false && aSos.contactId === contact.id).forEach(aSos => aSos.contactId = false)
 				this.send(contact, 'Repose-toi bien !')
@@ -124,7 +126,7 @@ class Bot{
 		let message = ''
 		message += 'Prénom : '+ sos.coordonnees.firstname + '\u000A'
 		message += 'Nom : '+ sos.coordonnees.lastname + '\u000A'
-		message += 'ENSIMAG : ' + (sos.coordonnees.ensimag ? 'Oui' : 'Peut-être')
+		message += 'ENSIMAG : ' + (sos.coordonnees.ensimag ? 'Oui' : 'Peut-être') + '\u000A'
 		for (let optionCode in sos.options){
 			console.log(optionCode)
 			message += optionCode + ' : ' + sos.options[optionCode] + '\u000A'
