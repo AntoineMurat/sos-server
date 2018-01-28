@@ -254,12 +254,6 @@ class Bot{
 
 		buttons.push({
 			type: "postback",
-			title: "Plus d'info",
-			payload: "PLUS_INFO:"+sos.id
-		})
-
-		buttons.push({
-			type: "postback",
 			title: "Mettre fin",
 			payload: "TERMINER_SOS:"+sos.id
 		})
