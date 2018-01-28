@@ -252,16 +252,10 @@ class Bot{
 				payload: "ACCEPTER_SOS:"+sos.id
 			})
 
-			buttons.push({
-				type: "postback",
-				title: "Mettre fin",
-				payload: "TERMINER_SOS:"+sos.id
-			})
-
 		buttons.push({
 			type: "postback",
-			title: "Mettre fin",
-			payload: "TERMINER_SOS:"+sos.id
+			title: "Plus d'infos",
+			payload: "PLUS_INFO:"+sos.id
 		})
 
 		let details = sos.coordonnees.address
