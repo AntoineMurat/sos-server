@@ -50,6 +50,7 @@ class SosRepository extends Repository{
 		remplirCoordonnees(sos, 'city')
 		remplirCoordonnees(sos, 'address')
 		remplirCoordonnees(sos, 'comment')
+		remplirCoordonnees(sos, 'ensimag')
 
 		if (typeof sos.coordonnees.coordinates === 'undefined')
 			sos.coordonnees.coordinates = {lat: 45.186593, lng: 5.742720}

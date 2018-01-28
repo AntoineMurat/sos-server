@@ -52,10 +52,26 @@ module.exports.allContacts = function(req, res) {
   sendJson(res, this.contactRepository.get())
 }
 
+module.exports.contactsDispo = function(req, res) {
+  sendJson(res, this.contactRepository.getDispo())
+}
+
+module.exports.contactsNonDispo = function(req, res) {
+  sendJson(res, this.contactRepository.getNonDispo())
+}
+
 module.exports.contactsSosing = function(req, res) {
   sendJson(res, this.contactRepository.getSosing())
 }
 
 module.exports.contactById = function(req, res) {
   sendJson(res, this.contactRepository.getById(req.params.id))
+}
+
+// GET is logged
+
+module.exports.isLogged = function(req, res) {
+	if (req.session.isAdmin)
+		return res.json({result: true})
+	res.json({result: false})
 }

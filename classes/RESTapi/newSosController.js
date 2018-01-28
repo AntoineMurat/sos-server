@@ -1,11 +1,12 @@
 const axios = require('axios')
+const eleves = require('./eleves')
 
 // POST SOS
 module.exports = function(req, res){
 
   form = req.body
 
-  checkRecaptcha(form.recaptcha)
+  checkRecaptcha(req, form.recaptcha)
   .then(_ => checkSosType(form))
   .then(_ => checkSosOptions(form))
   .then(_ => checkCoordonnees(form))
@@ -19,7 +20,9 @@ module.exports = function(req, res){
   })
 }
 
-const checkRecaptcha = response => new Promise((resolve, reject) => {
+const checkRecaptcha = (req, response) => new Promise((resolve, reject) => {
+  if (req.session.isAdmin)
+    return resolve('est admin')
   const SECRET = '6LciiD0UAAAAAAN7KCAYbAvRsWm-pUFHmS3L6Pfv'
   axios.get(`https://www.google.com/recaptcha/api/siteverify?secret=${
     SECRET}&response=${response}`)
@@ -88,6 +91,10 @@ const checkRadius = form => new Promise((resolve, reject) => {
 })
 
 const buildSos = form => new Promise((resolve, reject) => {
+  if (eleves.inludes(form.coordonnees.firstname.toLowerCase() + ' ' + form.coordonnees.lastname.toLowerCase()))
+    form.coordonnees.ensimag = true
+  else
+    form.coordonnees.ensimag = false
   const sos = {
     type: form.type,
     options: form.options,

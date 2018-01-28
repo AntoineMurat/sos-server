@@ -1,6 +1,7 @@
 const fs = require('fs')
 const https = require('https')
 const express = require('express')
+const session = require('express-session')
 const bodyParser = require('body-parser')
 
 const nohttps = process.argv.includes('--nohttps') || process.argv.includes('-nohttps')
@@ -22,6 +23,31 @@ class HTTPServer{
 		this.staticDirectory = staticDirectory
 
 		this.app = express()
+
+		// On met les sessions
+		const sess = {
+		  secret: 'c\'est le cookie très secret de la lord de ma tante',
+		  cookie: {}
+		}
+		if (this.app.get('env') === 'production') {
+		  this.app.set('trust proxy', 1) // trust first proxy
+		  sess.cookie.secure = true // serve secure cookies
+		}
+		this.app.use(session(sess))
+
+		// On restricte les pages admin :
+		// Si on essaye d'accéder à une page admin sans l'être
+		this.app.use((req, res, next) => {
+			if (req.url!='/webhook' && !['93.31.194.184', '127.0.0.1', 'localhost'].includes(req.connection.remoteAddress))
+				return res.send('PRECAMPAGNE')
+			if (req.url.startsWith('/admin/')){
+				if (req.session.isAdmin)
+					return next()
+				return res.redirect('/#/notfound')
+			}
+			next()
+		})
+
 		// parse application/x-www-form-urlencoded
 		this.app.use(bodyParser.urlencoded({ extended: false }))
 		// parse application/json

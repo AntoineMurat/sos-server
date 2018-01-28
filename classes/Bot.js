@@ -65,6 +65,7 @@ class Bot{
 				sos.contactId = contact.id
 				contact.free = false
 				this.sendSos(contact, [sos])
+				this.sendInfo(contact, sos.id)
 			}
 		// Si on veut abandonner un SOS :
 		} else if (event.postback.payload.startsWith('ABANDONNER_SOS:')){
@@ -74,6 +75,11 @@ class Bot{
 			sos.contactId = false
 
 			this.send(contact, 'C\'est noté ! Envoie-moi un message pour trouver du taf\' !')
+
+		// Si on plus d'info sur un SOS
+		} else if (event.postback.payload.startsWith('PLUS_INFO:')){
+			this.sendInfo(contact, event.postback.payload.split(':')[1])
+
 		// Si on veut mettre fin à un SOS :
 		} else if (event.postback.payload.startsWith('TERMINER_SOS:')){
 			const ret = this.supprimerSos(event.postback.payload.split(':')[1])
@@ -112,6 +118,18 @@ class Bot{
 		})
 	}
 
+	sendInfo(contact, sosId){
+		const sos = this.sosRepository.getById(sosId)
+		let message = ''
+		sos.options.forEach((key, value) => {
+			message += key + ' : ' + value +'\u000A'
+		})
+		this.messenger.sendTextMessage(contact.id, message, (err, body) => {
+			if (err) return console.error(err)
+			console.log(body)
+		})
+	}
+
 	sendAll(message){
 		this.contactRepository.forEach(contact => {
 			this.send(contact, message)
@@ -126,10 +144,10 @@ class Bot{
 		if (!contact.sos){
 			this.messenger.sendButtonsMessage(
 				contact.id,
-				"Tu n'appartiens pas à la team SOS.",
+				"Tu es enregistré comme \"non disponible\" pour les SOS.",
 				[{
 					type:"postback",
-					title:"Je SOS.",
+					title:"Je suis disponible.",
 					payload:"JE_SOS"
 				},{
 					type:"postback",
@@ -142,7 +160,7 @@ class Bot{
 		else {
 			const buttons = [{
 				type:"postback",
-				title:"Je ne SOS plus...",
+				title:"Je ne suis plus disponible...",
 				payload:"JE_NE_SOS_PLUS"
 			},{
 				type:"postback",
@@ -163,7 +181,7 @@ class Bot{
 			}
 			this.messenger.sendButtonsMessage(
 				contact.id,
-				"Tu appartiens à la team SOS.",
+				"Tu es enregistré comme \"disponible\" pour les SOS.",
 				buttons
 			)
 		}
@@ -225,7 +243,7 @@ class Bot{
 		if (sos.contactId === contact.id)
 			buttons.push({
 				type: "postback",
-				title: "Abandonner",
+				title: "Libérer",
 				payload: "ABANDONNER_SOS:"+sos.id
 			})
 		else
@@ -237,7 +255,13 @@ class Bot{
 
 		buttons.push({
 			type: "postback",
-			title: "Supprimer",
+			title: "Plus d'info",
+			payload: "PLUS_INFO:"+sos.id
+		})
+
+		buttons.push({
+			type: "postback",
+			title: "Mettre fin",
 			payload: "TERMINER_SOS:"+sos.id
 		})
 

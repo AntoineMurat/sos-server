@@ -12,8 +12,16 @@ class ContactRepository extends Repository{
 		return this.getSosing()
 	}
 
+	getDispo(){
+		return this.getWhere(contact => contact.sos && contact.free)
+	}
+
 	getSosing(){
-		return this.getWhere(contact => contact.sos)
+		return this.getWhere(contact => contact.sos && !contact.free)
+	}
+
+	getNonDispo(){
+		return this.getWhere(contact => !contact.sos)
 	}
 
 	insert(contact){
