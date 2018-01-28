@@ -45,7 +45,7 @@ const checkDispo = form => new Promise((resolve, reject) => {
 })
 
 const checkSosType = form => new Promise((resolve, reject) => {
-  if (!TypesSos.any(type => type.type === form.type))
+  if (!TypesSos.some(type => type.type === form.type))
     reject('Type de SOS inconnu !')
 
   resolve()
@@ -65,7 +65,7 @@ const checkSosOptions = form => new Promise((resolve, reject) => {
 
   // Not unwanted option
   for (let option in form.options){
-    if (!typeSos.parameters.any(parameter => parameter.code === option))
+    if (!typeSos.parameters.some(parameter => parameter.code === option))
       return reject(`option ${option} inconnue`)
   }
 
@@ -75,10 +75,10 @@ const checkSosOptions = form => new Promise((resolve, reject) => {
     if (parameter.multi){
       if (!option instanceof Array)
         return reject(`l'option ${option} n'est pas de type valide`)
-      if (!form.options[option].every(value => parameter.values.any(value2 => value2.code === value)))
+      if (!form.options[option].every(value => parameter.values.some(value2 => value2.code === value)))
         return reject(`l'option ${option} prend une valeur incorrecte`)
     } else {
-      if (!parameter.values.any(value => value.code === form.options[code]))
+      if (!parameter.values.some(value => value.code === form.options[code]))
         return reject(`la valeur ${form.options[code]} n'est pas valide pour le paramètre ${parameter.code}`)
     }
   }
