@@ -1,7 +1,7 @@
 const axios = require('axios')
 const eleves = require('./eleves')
 const TypesSos = require('./TypesSos')
-const currentEvent = require('events')
+const currentEvent = require('./events')
 
 // POST SOS
 module.exports = function(req, res){
