@@ -1,5 +1,7 @@
 const axios = require('axios')
 const eleves = require('./eleves')
+const TypesSos = require('./TypesSos')
+const currentEvent = require('events')
 
 // POST SOS
 module.exports = function(req, res){
@@ -7,6 +9,7 @@ module.exports = function(req, res){
   form = req.body
 
   checkRecaptcha(req, form.recaptcha)
+  .then(_ => checkDispo(form))
   .then(_ => checkSosType(form))
   .then(_ => checkSosOptions(form))
   .then(_ => checkCoordonnees(form))
@@ -34,11 +37,51 @@ const checkRecaptcha = (req, response) => new Promise((resolve, reject) => {
   .catch(error => reject(error))
 })
 
-const checkSosType = form => new Promise((resolve, reject) => resolve())
+const checkDispo = form => new Promise((resolve, reject) => {
+  if (currentEvent().inEvent || new Date() < new Date(2018, 1, 3, 23, 59, 0))
+    reject('Les SOS ne sont pas dispo')
+
+  resolve()
+})
+
+const checkSosType = form => new Promise((resolve, reject) => {
+  if (!typeSos.any(type => type.type === form.type))
+    reject('Type de SOS inconnu !')
+
+  resolve()
+})
 
 const checkSosOptions = form => new Promise((resolve, reject) => {
   if (typeof form.options !== 'object')
     return reject('options devrait être un objet.')
+
+  const typeSos = TypesSos.find(typeSos => typeSos.type === form.type)
+
+  // Check required
+  for (let parameter of typeSos.parameters){
+    if (parameter.required && typeof form.options[parameter.code] === undefined)
+      return reject(`option ${parameter.code} non remplie`)
+  }
+
+  // Not unwanted option
+  for (let option in form.options){
+    if (!typeSos.parameters.any(parameter => parameter.code === option))
+      return reject(`option ${option} inconnue`)
+  }
+
+  // All options have correct values.
+  for (let option in form.options){
+    const parameter = typeSos.parameters.find(parameter => parameter.code === option)
+    if (parameter.multi){
+      if (!option instanceof Array)
+        return reject(`l'option ${option} n'est pas de type valide`)
+      if (!form.options[option].every(value => parameter.values.any(value2 => value2.code === value)))
+        return reject(`l'option ${option} prend une valeur incorrecte`)
+    } else {
+      if (!parameter.values.any(value => value.code === form.options[code]))
+        return reject(`la valeur ${form.options[code]} n'est pas valide pour le paramètre ${parameter.code}`)
+    }
+  }
 
   resolve()
 })
