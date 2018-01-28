@@ -254,6 +254,12 @@ class Bot{
 
 		buttons.push({
 			type: "postback",
+			title: "Plus d'infos",
+			payload: "PLUS_INFO:"+sos.id
+		})
+
+		buttons.push({
+			type: "postback",
 			title: "Mettre fin",
 			payload: "TERMINER_SOS:"+sos.id
 		})
@@ -271,8 +277,7 @@ class Bot{
 		return {
 			title: sos.type,
 			subtitle: details,
-			// item_url: "https://www.oculus.com/en-us/rift/",
-			image_url: `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=13&size=400x200&maptype=roadmap&markers=color:red%7C${lat},${lng}&key=${MAPS_API_KEY}`,
+			image_url: `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7C${lat},${lng}&key=${MAPS_API_KEY}`,
 			buttons: buttons
 		}
 	}
