@@ -78,7 +78,7 @@ const checkSosOptions = form => new Promise((resolve, reject) => {
       if (!form.options[option].every(value => parameter.values.some(value2 => value2.code === value)))
         return reject(`l'option ${option} prend une valeur incorrecte`)
     } else {
-      if (!parameter.values.some(value => value.code === form.options[code]))
+      if (!parameter.values.some(value => value.code === form.options[option]))
         return reject(`la valeur ${form.options[code]} n'est pas valide pour le paramètre ${parameter.code}`)
     }
   }
