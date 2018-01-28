@@ -252,11 +252,11 @@ class Bot{
 				payload: "ACCEPTER_SOS:"+sos.id
 			})
 
-		buttons.push({
-			type: "postback",
-			title: "Plus d'infos",
-			payload: "PLUS_INFO:"+sos.id
-		})
+			buttons.push({
+				type: "postback",
+				title: "Mettre fin",
+				payload: "TERMINER_SOS:"+sos.id
+			})
 
 		buttons.push({
 			type: "postback",
