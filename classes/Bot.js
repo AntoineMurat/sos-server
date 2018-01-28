@@ -120,10 +120,15 @@ class Bot{
 
 	sendInfo(contact, sosId){
 		const sos = this.sosRepository.getById(sosId)
-		let message = 'Commentaire : ' + sos.comment
-		for (let optionCode in sos.options.forEach){
-			message += optionCode + ' : ' + sos.options[optionCode] +'\u000A'
+		let message = ''
+		message += 'Prénom : '+ sos.coordonnees.firstname + '\u000A'
+		message += 'Nom : '+ sos.coordonnees.lastname + '\u000A'
+		message += 'ENSIMAG : ' + (sos.coordonnees.ensimag ? 'Oui' : 'Peut-être')
+		for (let optionCode in sos.options){
+			console.log(options)
+			message += optionCode + ' : ' + sos.options[optionCode] + '\u000A'
 		}
+		message += 'Commentaire : ' + sos.coordonnees.comment + '\u000A'
 		this.send(contact, message)
 	}
 
