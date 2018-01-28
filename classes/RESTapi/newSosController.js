@@ -38,8 +38,8 @@ const checkRecaptcha = (req, response) => new Promise((resolve, reject) => {
 })
 
 const checkDispo = form => new Promise((resolve, reject) => {
-  if (currentEvent().inEvent || new Date() < new Date(2018, 1, 3, 23, 59, 0))
-    reject('Les SOS ne sont pas dispo')
+  // if (currentEvent().inEvent || new Date() < new Date(2018, 1, 3, 23, 59, 0))
+  //   reject('Les SOS ne sont pas dispo')
 
   resolve()
 })
