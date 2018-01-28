@@ -126,7 +126,7 @@ class Bot{
 		message += 'Nom : '+ sos.coordonnees.lastname + '\u000A'
 		message += 'ENSIMAG : ' + (sos.coordonnees.ensimag ? 'Oui' : 'Peut-être')
 		for (let optionCode in sos.options){
-			console.log(options)
+			console.log(optionCode)
 			message += optionCode + ' : ' + sos.options[optionCode] + '\u000A'
 		}
 		message += 'Commentaire : ' + sos.coordonnees.comment + '\u000A'
