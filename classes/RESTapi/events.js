@@ -55,10 +55,22 @@ const events = [{
   inEvent: false
 }]
 
-module.exports = _ => {
+module.exports.currentEvent = _ => {
   const now = new Date()
   // On récuère la date la plue proche.
   let i = 0
   for (; events[i].date < now; i++);
   return events[i]
+}
+
+const sosAvailabilities = [
+  [new Date(2018, 1, 3, 23, 59, 0), new Date(2018, 1, 4, 23, 59, 0)],
+  [new Date(2018, 1, 5, 23, 59, 0), new Date(2018, 1, 6, 23, 59, 0)],
+  [new Date(2018, 1, 7, 23, 59, 0), new Date(2018, 1, 8, 23, 59, 0)],
+  [new Date(2018, 1, 9, 23, 59, 0), new Date(2018, 1, 10, 23, 59, 0)]
+]
+
+module.exports.sosAvailable = _ => {
+  const now = new Date()
+  return sosAvailabilities.some(creneau => creneau[0] < now && now < creneau[1])
 }

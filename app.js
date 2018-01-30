@@ -24,10 +24,11 @@ const readInput = _ => {
 
 		if (input === 'newsos')
 			sosReposotory.insert({
-				type: 'kebab',
+				type: 'debug',
         coordonnees: {
           firstname: 'Antoine',
           lastname: 'Murat',
+          ensimag: true,
           phone: '+33604165959',
           address: '10 Boulevard Maréchal Joffre',
           city: 'Grenoble',
@@ -36,7 +37,9 @@ const readInput = _ => {
         },
         options: {}
 			})
-		else
+    else if (input === 'save')
+      db.saveDatabase()
+    else
 			console.error('Unknown command')
 
 		readInput()

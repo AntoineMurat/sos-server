@@ -1,7 +1,7 @@
 const axios = require('axios')
 const eleves = require('./eleves')
 const TypesSos = require('./TypesSos')
-const currentEvent = require('./events')
+const currentEvent = require('./events').sosAvailable()
 
 // POST SOS
 module.exports = function(req, res){
@@ -38,7 +38,7 @@ const checkRecaptcha = (req, response) => new Promise((resolve, reject) => {
 })
 
 const checkDispo = form => new Promise((resolve, reject) => {
-  // if (currentEvent().inEvent || new Date() < new Date(2018, 1, 3, 23, 59, 0))
+  // if (!sosAvailable())
   //   reject('Les SOS ne sont pas dispo')
 
   resolve()
@@ -59,7 +59,7 @@ const checkSosOptions = form => new Promise((resolve, reject) => {
 
   // Check required
   for (let parameter of typeSos.parameters){
-    if (parameter.required && typeof form.options[parameter.code] === undefined)
+    if (parameter.required && typeof form.options[parameter.code] === 'undefined')
       return reject(`option ${parameter.code} non remplie`)
   }
 
@@ -79,7 +79,7 @@ const checkSosOptions = form => new Promise((resolve, reject) => {
         return reject(`l'option ${option} prend une valeur incorrecte`)
     } else {
       if (!parameter.values.some(value => value.code === form.options[option]))
-        return reject(`la valeur ${form.options[code]} n'est pas valide pour le paramètre ${parameter.code}`)
+        return reject(`la valeur ${form.options[option]} n'est pas valide pour le paramètre ${parameter.code}`)
     }
   }
 

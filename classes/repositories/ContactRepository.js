@@ -9,7 +9,24 @@ class ContactRepository extends Repository{
 	}
 
 	getBestMatchesFor(sos, limit=5){
-		return this.getDispo()
+		const distance = (dest, center) => {
+	    const degreesToRadians = degrees => degrees * Math.PI / 180
+	    const earthRadiusKm = 6371
+
+	    const dLat = degreesToRadians(center.lat-dest.lat)
+	    const dLon = degreesToRadians(center.lng-dest.lng)
+
+	    const lat1 = degreesToRadians(center.lat)
+	    const lat2 = degreesToRadians(dest.lat)
+
+	    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+	              Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2)
+	    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	    const distance = earthRadiusKm * c
+	    return distance
+	  }
+		console.log(this.getDispo().sort((c1, c2) => distance(c1.home, sos.coordonnees.coordinates) < distance(c2.home, sos.coordonnees.coordinates)).slice(0, limit))
+		return this.getDispo().sort((c1, c2) => distance(c1.home, sos.coordonnees.coordinates) < distance(c2.home, sos.coordonnees.coordinates)).slice(0, limit)
 	}
 
 	getDispo(){
