@@ -47,6 +47,8 @@ class HTTPServer{
 				'::ffff:84.6.21.122', // Alexandre
 				'::ffff:77.136.86.171', // Menut
 				'::ffff:82.122.243.184', // Gautier
+				'::ffff:195.25.220.5', // Gaétan
+				'::ffff:46.193.64.96', // Mathieu
 			].includes(req.connection.remoteAddress))
 				return res.send('PRECAMPAGNE ' + req.connection.remoteAddress)
 			if (req.url.startsWith('/admin/')){
