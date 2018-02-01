@@ -39,7 +39,7 @@ class HTTPServer{
 		// Si on essaye d'accéder à une page admin sans l'être
 		this.app.use((req, res, next) => {
 			if (req.url != '/webhook' && ![
-				'::ffff:93.31.194.184',
+				'::ffff:129.88.57.87',
 				'::ffff:127.0.0.1',
 				'::1',
 				'localhost',
@@ -58,6 +58,7 @@ class HTTPServer{
 				'::ffff:80.12.63.85', // Romain
 				'::ffff:79.95.3.84', // Rémi
 				'::ffff:37.173.171.175', // Lucille
+				'::ffff:66.249.93.202', // Cyprien
 			].includes(req.connection.remoteAddress))
 				return res.send('PRECAMPAGNE ' + req.connection.remoteAddress)
 			if (req.url.startsWith('/admin/')){
