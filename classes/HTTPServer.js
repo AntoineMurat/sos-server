@@ -39,7 +39,7 @@ class HTTPServer{
 		// Si on essaye d'accéder à une page admin sans l'être
 		this.app.use((req, res, next) => {
 			if (req.url != '/webhook' && ![
-				'::ffff:129.88.57.87',
+				'::ffff:93.31.194.184',
 				'::ffff:127.0.0.1',
 				'::1',
 				'localhost',
