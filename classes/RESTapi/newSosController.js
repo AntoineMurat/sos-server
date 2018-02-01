@@ -1,7 +1,7 @@
 const axios = require('axios')
 const eleves = require('./eleves')
 const TypesSos = require('./TypesSos')
-const currentEvent = require('./events').sosAvailable()
+const sosAvailable = require('./events').sosAvailable
 
 // POST SOS
 module.exports = function(req, res){

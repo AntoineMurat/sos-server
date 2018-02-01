@@ -51,9 +51,9 @@ class HTTPServer{
 				'::ffff:46.193.64.96', // Mathieu
 				'::ffff:46.193.0.139', // Baptiste
 				'::ffff:37.18.161.87', // Théo
-				'::ffff:77.136.84.45', // Gloria
+				'::ffff:37.173.9.29', // Gloria
 				'::ffff:46.193.2.48', // Théodore
-				'::ffff:37.169.118.65', // Julien
+				'::ffff:46.193.64.98', // Julien
 				'::ffff:82.67.64.109', // Adam
 				'::ffff:80.12.63.85', // Romain
 				'::ffff:79.95.3.84', // Rémi

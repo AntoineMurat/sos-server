@@ -193,9 +193,7 @@ class Bot{
 	}
 
 	sendAllSos(contact){
-		console.log('Début de l\'envoi de tous les sos au contact.')
 		const sos = this.sosRepository.getFree()
-		console.log('longueur ' + sos.length)
 		if (sos.length > 0)
 			return this.sendSos(contact, sos)
 		this.send(contact, 'Aucun SOS en attente.')
@@ -224,7 +222,10 @@ class Bot{
 
 		const newSos = this.sosRepository.insert(sos)
 		this.contactRepository.getBestMatchesFor(newSos)
-		.forEach(contact => this.sendSos(contact, [newSos]))
+		.forEach(contact => {
+			this.send(contact, 'Nouveau SOS :')
+			this.sendSos(contact, [newSos])
+		})
 
 		return newSos
 	}
