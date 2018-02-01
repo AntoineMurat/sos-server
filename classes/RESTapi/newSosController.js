@@ -130,7 +130,7 @@ const checkRadius = form => new Promise((resolve, reject) => {
   const acceptedPerimeter = [{center: {lat: 45.188418, lng: 5.756331}, r: 3}]
     // [(45.188418, 5.756331), 2}  et [(45.189164, 5.730685), 2}
   // Si
-  if (! acceptedPerimeter.some(p => distance(dest, p.center) < P.r))
+  if (! acceptedPerimeter.some(p => distance(dest, p.center) < p.r))
     return reject('Désolé mais tu es trop loin pour nos jambes de hobbits...')
 
   resolve()
