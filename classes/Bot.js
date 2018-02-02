@@ -122,6 +122,7 @@ class Bot{
 	}
 
 	sendInfo(contact, sosId){
+		console.log(sosId)
 		const sos = this.sosRepository.getById(sosId)
 		let message = ''
 		message += 'Prénom : '+ sos.coordonnees.firstname + '\u000A'
