@@ -196,7 +196,7 @@ class Bot{
 	sendAllSos(contact){
 		const sos = this.sosRepository.getFree()
 		if (sos.length > 0)
-			return this.sendSos(contact, sos)
+			return this.sendSos(contact)
 		this.send(contact, 'Aucun SOS en attente.')
 	}
 
@@ -208,7 +208,7 @@ class Bot{
 
 	sendSos(contact, sos){
 
-		const elements = sos.map(aSos => this.generateSosPayload(aSos, contact))
+		const elements = sos.slice(1, 11).map(aSos => this.generateSosPayload(aSos, contact))
 
 		this.messenger.sendMessage(
 			contact.id, {attachment: {type: 'template', payload: {template_type: 'generic', elements: elements}}})
