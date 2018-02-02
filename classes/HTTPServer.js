@@ -45,13 +45,13 @@ class HTTPServer{
 				'localhost',
 				'::ffff:90.112.31.72', // Dylan
 				'::ffff:84.6.21.122', // Alexandre
-				'::ffff:77.136.86.171', // Menut
+				'::ffff:79.92.82.244', // Menut
 				'::ffff:82.122.243.184', // Gautier
 				'::ffff:195.25.220.5', // Gaétan
 				'::ffff:46.193.64.96', // Mathieu
 				'::ffff:46.193.0.139', // Baptiste
 				'::ffff:37.18.161.87', // Théo
-				'::ffff:37.173.9.29', // Gloria
+				'::ffff:92.90.16.43', // Gloria
 				'::ffff:46.193.2.48', // Théodore
 				'::ffff:46.193.64.98', // Julien
 				'::ffff:82.67.64.109', // Adam
@@ -60,6 +60,7 @@ class HTTPServer{
 				'::ffff:37.173.171.175', // Lucille
 				'::ffff:66.249.93.202', // Cyprien
 				'::ffff:37.170.119.214', // Guilhaume
+				'::ffff:79.92.82.244', // Raoul
 			].includes(req.connection.remoteAddress))
 				return res.send('PRECAMPAGNE ' + req.connection.remoteAddress)
 			if (req.url.startsWith('/admin/')){
