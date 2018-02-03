@@ -16,7 +16,7 @@ const sendJson = (res, json) => res.json(stripResultsMetadata(json))
 
 // POST LOGIN
 module.exports.login = function(req, res){
-	if (req.body.login == 'GaétanOuAntoine' && req.body.password == 'snow42estleplusbeau'){
+	if (req.body.login === 'GaétanOuAntoine' && req.body.password === 'snow42estleplusbeau'){
 		req.session.isAdmin = true
 		return res.json({error: false})
 	}
