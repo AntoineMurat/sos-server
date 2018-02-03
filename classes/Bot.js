@@ -207,12 +207,7 @@ class Bot{
 	}
 
 	sendSos(contact, sos){
-
-		console.log(sos)
-
 		const elements = sos.slice(0, 10).map(aSos => this.generateSosPayload(aSos, contact))
-
-		console.log(elements)
 
 		this.messenger.sendMessage(
 			contact.id, {attachment: {type: 'template', payload: {template_type: 'generic', elements: elements}}})

@@ -25,7 +25,6 @@ class ContactRepository extends Repository{
 	    const distance = earthRadiusKm * c
 	    return distance
 	  }
-		console.log(this.getDispo().sort((c1, c2) => distance(c1.home, sos.coordonnees.coordinates) < distance(c2.home, sos.coordonnees.coordinates)).slice(0, limit))
 		return this.getDispo().sort((c1, c2) => distance(c1.home, sos.coordonnees.coordinates) < distance(c2.home, sos.coordonnees.coordinates)).slice(0, limit)
 	}
 
