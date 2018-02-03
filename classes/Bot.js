@@ -210,7 +210,7 @@ class Bot{
 
 		console.log(sos)
 
-		const elements = sos.slice(1, 11).map(aSos => this.generateSosPayload(aSos, contact))
+		const elements = sos.slice(0, 10).map(aSos => this.generateSosPayload(aSos, contact))
 
 		console.log(elements)
 
