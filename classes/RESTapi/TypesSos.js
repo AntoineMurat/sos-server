@@ -110,7 +110,16 @@ const typesSos = [{
       name: 'Ménage – gratuit',
       code: 'MENAGE'
     }, {
-      name: 'Livraison - prix coûtant',
+      name: 'Livraison Burger King - prix coûtant',
+      code: 'BURGER KING'
+    }, {
+      name: 'Livraison Mac Do - prix coûtant',
+      code: 'MAC DO'
+    }, {
+      name: 'Livraison Syfax - prix coûtant',
+      code: 'SYFAX'
+    }, {
+      name: 'Livraison quelconque - prix coûtant',
       code: 'LIVRAISON'
     }, {
       name: 'Corvée quelconque – gratuit',
