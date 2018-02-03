@@ -105,7 +105,7 @@ const checkCoordonnees = form => new Promise((resolve, reject) => {
     return reject('nom invalide.')
   if (!/^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/.test(coordonnees.phone))
     return reject('prénom invalide.')
-  if (!['Grenoble', 'St Martin d\'Hères'].includes(coordonnees.city))
+  if (!['Grenoble', 'St Martin d\'Hères', 'La Tronche'].includes(coordonnees.city))
     return reject('ville invalide')
 
   resolve()
@@ -137,7 +137,7 @@ const checkRadius = form => new Promise((resolve, reject) => {
   const acceptedPerimeter = [{center: {lat: 45.189205, lng: 5.730681}, r: 2}, {center: {lat: 45.189594, lng: 5.756319}, r: 2}]
   // Si
   if (! acceptedPerimeter.some(p => distance(dest, p.center) < p.r))
-    return reject('Désolé mais tu es trop loin pour nos jambes de hobbits...')
+    return reject('Trop loin.')
 
   resolve()
 })

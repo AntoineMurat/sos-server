@@ -1,7 +1,7 @@
 const typesSos = [{
   title: 'Une faim de hobbit',
   type: 'faim-de-hobbit',
-  description: `Si toi aussi, tu te sens l’appétit d’un hobbit, ou que tu as juste envie de profiter de 6 repas dans la journée, c’est l’occasion rêvée !`,
+  description: `Si toi aussi, tu te sens l’appétit d’un hobbit, ou que tu as juste envie de profiter de 6 repas dans la journée, c’est l’occasion rêvée ! (indisponible pendant les p'tits dej')`,
   parameters: [{
     name: 'Repas',
     code: 'REPAS',
@@ -9,25 +9,28 @@ const typesSos = [{
     multi: false,
     values: [{
       name: 'Repas de liste : Poulet au curry avec légumes – 2€50',
-      code: 'LISTE'
+      code: 'REPAS DE LISTE'
+    }, {
+      name: 'Cookies (x10) – 1€',
+      code: '10 COOKIES'
     }, {
       name: 'Pâtes – gratuit',
       code: 'PATES'
     }, {
-      name: 'Croque humain - gratuit',
+      name: 'Croque humain(e) - gratuit',
       code: 'CROQUE'
     }, {
-      name: 'Ent : Plat de légumes – gratuit',
-      code: 'ENT'
+      name: 'Ent (Plat de légumes) – gratuit',
+      code: 'ENT LEGUMES'
     }, {
-      name: 'Sucreries : Roses des sables, rochers, cookies – gratuit',
+      name: 'Sucreries (Roses des sables, rochers, cookies) – gratuit',
       code: 'SUCRERIES'
     }, {
       name: 'Crêpes – gratuit',
       code: 'CREPES'
     }, {
-      name: 'Petit Déjeuner du Hobbit : chocolat chaud ou café, jus de pomme ou jus d’orange, croissant ou pain au chocolat – gratuit (à réserver la veille)',
-      code: 'HOBBIT'
+      name: 'Petit Déjeuner du Hobbit (Jus de pomme ou d\'orange, croissant ou pain au chocolat. A réserver la veille.) – gratuit',
+      code: 'PETIT DEJ HOBBIT'
     }]
   }]
 }, {
@@ -40,19 +43,19 @@ const typesSos = [{
     multi: false,
     required: true,
     values: [{
-      name: 'On vous propose en exclusivité notre recette de piña colada maison, préparée par les plus grans connaisseurs de nos Terres - 2€ le litre',
+      name: 'On vous propose en exclusivité notre recette de piña colada maison - 2€ le litre',
       code: 'COCKTAIL'
     }, {
-      name: 'Alcool à foison - prix contant',
-      code: 'FOISON'
+      name: 'Alcool à foison - prix coûtant',
+      code: 'ALCOOL A FOISON'
     }, {
       name: 'Maître des Nains – 5€ pour un mètre de shots',
-      code: 'MAITRE'
+      code: 'METRE DE SHOTS'
     }, {
-      name: 'Bière des Dépravés – 1€ la canette de 50 cL de 8.6',
-      code: 'DEPRAVE'
+      name: 'Bière des Dépravés (50cL de 8.6) – 1€',
+      code: 'CANETTE 8.6'
     }, {
-      name: 'Bière des Cavernes – 3€ la cuvée des trolls',
+      name: 'Bière des Cavernes (la Cuvée des Trolls) – 3€',
       code: 'TROLLS'
     }]
   }]
@@ -66,60 +69,72 @@ const typesSos = [{
     multi: false,
     required: true,
     values: [{
-      name: 'Films',
-      code: 'FILMS'
+      name: 'Film – gratuit',
+      code: 'FILM'
     }, {
-      name: 'Chorégraphie',
-      code: 'CHORE'
+      name: 'Chorégraphie – gratuit',
+      code: 'CHOREGRAPHIE'
     }, {
       name: 'Jeu à boire - alcool payant',
       code: 'BOIRE'
     }, {
-      name: 'Jeux-Vidéo : Jeux vidéo : S’il vous manque des joueurs, ou s’il vous prend l’envie de vous mesurer à nos joueurs, ce SOS est fait pour vous ! (Battlefront, Warcraft , CS - possibilité de venir avec une clé USB avec les jeux)',
-      code: 'JV'
+      name: 'Jeux-Vidéo : On débarque avec notre Battlefront et c\'est  tipar on vous met la misère.',
+      code: 'BATTLEFRONT'
     }, {
-      name: 'Jeu de carte original',
+      name: 'Jeu de carte original – gratuit',
       code: 'JDC'
+    }, {
+      name: 'Shittyflute – gratuit',
+      code: 'SHITTYFLUTE'
+    }, {
+      name: 'Expertise C de l\'AST (obligation de moyens) – gratuit',
+      code: 'EXPERTISE C'
+    }, {
+      name: 'Magie – gratuit',
+      code: 'MAGIE'
+    }]
+  }]
+}, {
+  title: 'Les Nain\'Dispensables',
+  type: 'service',
+  description: `Besoin d'un dépannage ou juste fainéant ? Nos nains sont là pour résoudre tous vos problèmes !`,
+  parameters: [{
+    name: `Corvée`,
+    code: 'SERVICE',
+    multi: false,
+    required: true,
+    values: [{
+      name: 'Vaisselle – gratuit',
+      code: 'VAISSELLE'
+    }, {
+      name: 'Ménage – gratuit',
+      code: 'MENAGE'
+    }, {
+      name: 'Livraison - prix coûtant',
+      code: 'LIVRAISON'
+    }, {
+      name: 'Corvée quelconque – gratuit',
+      code: 'QUELCONQUE'
     }]
   }]
 }, {
   title: 'Roi du hasard',
   type: 'hasard',
-  description: `Trop de choix tue le choix ? Nos Maîtres du Hasard se chargeront de choisir un SOS pour toi ! N’hésite pas à tenter ta chance, des SOS payants sont également à gagner !`,
+  description: `Trop de choix tue le choix ? Nos Maîtres du Hasard se chargeront de choisir un SOS pour toi ! Des SOS payants sont également à gagner !`,
   parameters: [{
     name: `T'es tenté par`,
     code: 'TENTATION',
     multi: false,
     required: true,
     values: [{
-      name: 'Une faim de hobbit',
+      name: 'Une faim de hobbit – gratuit',
       code: 'FAIM'
     }, {
-      name: 'Une soif de nain',
+      name: 'Une soif de nain – gratuit',
       code: 'SOIF'
     }, {
-      name: 'Au chaud dans ta caverne',
+      name: 'Au chaud dans ta caverne – gratuit',
       code: 'CAVERNE'
-    }]
-  }]
-}, {
-  title: `L'expertise C de l'AST`,
-  type: 'ast',
-  description: `La campagne c'est un truc de guedin mais le C c'est la galère ? Nos AST les plus dévoués sont là pour résoudre vos bugs. `,
-  parameters: [{
-    name: `J'ai besoin`,
-    code: 'BESOIN',
-    multi: false,
-    required: true,
-    values: [{
-      name: `d'aide pour un algo`,
-      code: 'ALGO'
-    }, {
-      name: `qu'on m'explique le C`,
-      code: 'C'
-    }, {
-      name: `de comprendre les pointeurs`,
-      code: 'POINTEURS'
     }]
   }]
 }]
