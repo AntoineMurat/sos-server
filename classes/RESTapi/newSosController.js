@@ -88,7 +88,7 @@ const checkSosOptions = form => new Promise((resolve, reject) => {
 
 const checkCoordonnees = form => new Promise((resolve, reject) => {
   if (typeof form.coordonnees !== 'object')
-    return reject('coordonnees devrait être un objet.')
+    return reject('coordonnéés invalides.')
   const coordonnees = form.coordonnees
   if (![
     coordonnees.firstname,
@@ -99,10 +99,14 @@ const checkCoordonnees = form => new Promise((resolve, reject) => {
     coordonnees.comment
   ].every(arg => typeof arg === "string"))
     return reject('coordonnees invalides.')
-  if (!/^[\w\-\s]+$/.test(coordonnees.firstname))
+  if (!/^[\w\-\s]+$/.test(coordonnees.firstname) || coordonnees.firstname.length > 35)
     return reject('prénom invalide.')
-  if (!/^[\w\-\s]+$/.test(coordonnees.lastname))
+  if (!/^[\w\-\s]+$/.test(coordonnees.lastname) || coordonnees.lastname.length > 35)
     return reject('nom invalide.')
+  if (coordonnees.address.length > 75)
+    return reject('adresse invalide')
+  if (coordonnees.comment.length > 150)
+    return reject('commentaire invalide')
   if (!/^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/.test(coordonnees.phone))
     return reject('prénom invalide.')
   if (!['Grenoble', 'St Martin d\'Hères', 'La Tronche'].includes(coordonnees.city))
