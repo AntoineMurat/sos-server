@@ -6,7 +6,7 @@ const sosAvailable = require('./events').sosAvailable
 // POST SOS
 module.exports = function(req, res){
 
-  form = req.body
+  const form = req.body
 
   checkRecaptcha(req, form.recaptcha)
   .then(_ => checkDispo(form))
@@ -19,7 +19,7 @@ module.exports = function(req, res){
   .then(_ => res.json({error: false}))
   .catch(error => {
     res.json({error: error})
-    console.log(error)
+    console.log(`Erreur "${error}" depuis ${req.connection.remoteAddress}.`)
   })
 }
 
@@ -38,8 +38,8 @@ const checkRecaptcha = (req, response) => new Promise((resolve, reject) => {
 })
 
 const checkDispo = form => new Promise((resolve, reject) => {
-  // if (!sosAvailable())
-  //   reject('Les SOS ne sont pas dispo')
+  if (!sosAvailable())
+    reject('Les SOS ne sont pas dispo')
 
   resolve()
 })

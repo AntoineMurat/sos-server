@@ -6,42 +6,42 @@ const events = [{
 }, {
   code: 'DEBUT_PTIT_DEJ',
   textBefore: 'Le P\'tit Dej débarque dans',
-  date: new Date(2018, 1, 5, 8, 0, 0),
+  date: new Date(2018, 1, 5, 7, 0, 0),
   inEvent: false
 }, {
   code: 'FIN_PTIT_DEJ',
   textBefore: 'Le P\'tit Dej prend fin dans',
-  date: new Date(2018, 1, 5, 17, 0, 0),
+  date: new Date(2018, 1, 5, 18, 0, 0),
   inEvent: true
 }, {
   code: 'DEBUT_KFET',
-  textBefore: 'La KFET ouvre ses portes dans',
+  textBefore: 'La Kfet ouvre ses portes dans',
   date: new Date(2018, 1, 7, 18, 30, 0),
   inEvent: false
 }, {
   code: 'FIN_KFET',
-  textBefore: 'La KFET ferme ses porte dans',
+  textBefore: 'La Kfet ferme ses porte dans',
   date: new Date(2018, 1, 7, 23, 30, 0),
   inEvent: true
 }, {
   code: 'DEBUT_SOIREE',
   textBefore: 'La soirée ouvre ses portes dans',
-  date: new Date(2018, 1, 9, 20, 0, 0),
+  date: new Date(2018, 1, 9, 23, 0, 0),
   inEvent: false
 }, {
   code: 'FIN_SOIREE',
-  textBefore: 'La soirée ferme ses portes dans',
+  textBefore: 'La soirée prend fin dans',
   date: new Date(2018, 1, 10, 4, 30, 0),
   inEvent: true
 }, {
   code: 'DEBUT_ACTIVITE',
   textBefore: 'L\'activité libre arrive dans',
-  date: new Date(2018, 1, 11, 12, 0, 0),
+  date: new Date(2018, 1, 11, 14, 30, 0),
   inEvent: false
 }, {
   code: 'FIN_ACTIVITE',
   textBefore: 'Activité libre en cours pendant',
-  date: new Date(2018, 1, 11, 18, 0, 0),
+  date: new Date(2018, 1, 11, 18, 30, 0),
   inEvent: true
 }, {
   code: 'ENTREE_MANDAT',

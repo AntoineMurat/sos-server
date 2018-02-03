@@ -33,9 +33,6 @@ class Bot{
 	}
 
 	handleMessage(contact, event){
-		// event.message.text.toLowerCase().includes('newsos')
-		console.log(event.message)
-
 		// Si gps, on setHome.
 		if (event.message.attachments
 			&& event.message.attachments[0].payload
@@ -122,14 +119,12 @@ class Bot{
 	}
 
 	sendInfo(contact, sosId){
-		console.log(sosId)
 		const sos = this.sosRepository.getById(sosId)
 		let message = ''
 		message += 'Prénom : '+ sos.coordonnees.firstname + '\u000A'
 		message += 'Nom : '+ sos.coordonnees.lastname + '\u000A'
 		message += 'ENSIMAG : ' + (sos.coordonnees.ensimag ? 'Oui' : 'Peut-être') + '\u000A'
 		for (let optionCode in sos.options){
-			console.log(optionCode)
 			message += optionCode + ' : ' + sos.options[optionCode] + '\u000A'
 		}
 		message += 'Commentaire : ' + sos.coordonnees.comment + '\u000A'
@@ -214,12 +209,7 @@ class Bot{
 	}
 
 	addSos(sos){
-		/*sos = {
-			type: "",
-			coordonnees: {},
-			options: {}
-		}*/
-
+		console.log(`Nouveau SOS de ${sos.coordonnees.firstname} ${sos.coordonnees.lastname}.`)
 		const newSos = this.sosRepository.insert(sos)
 		this.contactRepository.getBestMatchesFor(newSos)
 		.forEach(contact => {

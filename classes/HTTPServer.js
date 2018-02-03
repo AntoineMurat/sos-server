@@ -38,32 +38,6 @@ class HTTPServer{
 		// On restricte les pages admin :
 		// Si on essaye d'accéder à une page admin sans l'être
 		this.app.use((req, res, next) => {
-			if (req.url != '/webhook' && ![
-				'::ffff:93.31.194.184',
-				'::ffff:127.0.0.1',
-				'::1',
-				'localhost',
-				'::ffff:90.112.31.72', // Dylan
-				'::ffff:84.6.21.122', // Alexandre
-				'::ffff:79.92.82.244', // Menut
-				'::ffff:82.122.243.184', // Gautier
-				'::ffff:195.25.220.5', // Gaétan
-				'::ffff:46.193.64.96', // Mathieu
-				'::ffff:46.193.0.139', // Baptiste
-				'::ffff:37.18.161.87', // Théo
-				'::ffff:92.90.16.43', // Gloria
-				'::ffff:46.193.2.48', // Théodore
-				'::ffff:46.193.64.98', // Julien
-				'::ffff:82.67.64.109', // Adam
-				'::ffff:80.12.63.85', // Romain
-				'::ffff:79.95.3.84', // Rémi
-				'::ffff:37.173.171.175', // Lucille
-				'::ffff:66.249.93.202', // Cyprien
-				'::ffff:37.170.119.214', // Guilhaume
-				'::ffff:79.92.82.244', // Raoul
-				'::ffff:90.90.168.244', // Alexandre 2
-			].includes(req.connection.remoteAddress))
-				return res.send('PRECAMPAGNE ' + req.connection.remoteAddress)
 			if (req.url.startsWith('/admin/')){
 				if (req.session.isAdmin)
 					return next()
