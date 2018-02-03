@@ -19,7 +19,7 @@ module.exports = function(req, res){
   .then(_ => res.json({error: false}))
   .catch(error => {
     res.json({error: error})
-    console.log(`Erreur "${error}" depuis ${req.connection.remoteAddress}.`)
+    console.error(`Erreur "${error}" depuis ${req.connection.remoteAddress}.`)
   })
 }
 

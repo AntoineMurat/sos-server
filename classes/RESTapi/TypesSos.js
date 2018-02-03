@@ -56,7 +56,7 @@ const typesSos = [{
       code: 'CANETTE 8.6'
     }, {
       name: 'Bière des Cavernes (la Cuvée des Trolls) – 3€',
-      code: 'TROLLS'
+      code: 'CUVEE DES TROLLS'
     }]
   }]
 }, {
@@ -78,11 +78,11 @@ const typesSos = [{
       name: 'Jeu à boire - alcool payant',
       code: 'BOIRE'
     }, {
-      name: 'Jeux-Vidéo : On débarque avec notre Battlefront et c\'est  tipar on vous met la misère.',
+      name: 'Jeux-vidéo : On débarque avec notre Battlefront et c\'est  tipar on vous met la misère.',
       code: 'BATTLEFRONT'
     }, {
-      name: 'Jeu de carte original – gratuit',
-      code: 'JDC'
+      name: 'Jeu de cartes original – gratuit',
+      code: 'JEU DE CARTES'
     }, {
       name: 'Shittyflute – gratuit',
       code: 'SHITTYFLUTE'
@@ -120,7 +120,7 @@ const typesSos = [{
       code: 'SYFAX'
     }, {
       name: 'Livraison quelconque - prix coûtant',
-      code: 'LIVRAISON'
+      code: 'LIVRAISON QUELCONQUE'
     }, {
       name: 'Corvée quelconque – gratuit',
       code: 'QUELCONQUE'

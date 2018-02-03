@@ -11,7 +11,7 @@ const events = [{
 }, {
   code: 'FIN_PTIT_DEJ',
   textBefore: 'Le P\'tit Dej prend fin dans',
-  date: new Date(2018, 1, 5, 18, 0, 0),
+  date: new Date(2018, 1, 5, 17, 0, 0),
   inEvent: true
 }, {
   code: 'DEBUT_KFET',

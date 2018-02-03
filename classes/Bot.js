@@ -114,7 +114,6 @@ class Bot{
 	send(contact, message){
 		this.messenger.sendTextMessage(contact.id, message, (err, body) => {
 			if (err) return console.error(err)
-			console.log(body)
 		})
 	}
 
