@@ -99,7 +99,13 @@ const checkCoordonnees = form => new Promise((resolve, reject) => {
     coordonnees.comment
   ].every(arg => typeof arg === "string"))
     return reject('coordonnees invalides.')
-  if (!['Grenoble', 'Meylan', 'St Martin d\'Hères'].includes(coordonnees.city))
+  if (!/^[\w\-\s]+$/.test(coordonnees.firstname))
+    return reject('prénom invalide.')
+  if (!/^[\w\-\s]+$/.test(coordonnees.lastname))
+    return reject('nom invalide.')
+  if (!/^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/.test(coordonnees.phone))
+    return reject('prénom invalide.')
+  if (!['Grenoble', 'St Martin d\'Hères'].includes(coordonnees.city))
     return reject('ville invalide')
 
   resolve()
