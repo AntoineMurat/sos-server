@@ -203,7 +203,7 @@ class Bot{
 	sendMySos(contact){
 		const mySos = this.sosRepository.getTodoByContact(contact)
 		this.sendSos(contact, mySos)
-		this.sendInfo(contact, mySos.id)
+		this.sendInfo(contact, mySos[0].id)
 	}
 
 	sendSos(contact, sos){
