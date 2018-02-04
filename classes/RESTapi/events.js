@@ -64,8 +64,8 @@ module.exports.currentEvent = _ => {
 }
 
 const sosAvailabilities = [
-  [new Date(2018, 1, 3, 23, 59, 0), new Date(2018, 1, 4, 14, 0, 0)],
-  [new Date(2018, 1, 4, 20, 0, 0), new Date(2018, 1, 5, 7, 0, 0)],
+  [new Date(2018, 1, 3, 23, 59, 0), new Date(2018, 1, 4, 13, 30, 0)],
+  [new Date(2018, 1, 4, 18, 30, 0), new Date(2018, 1, 5, 7, 0, 0)],
   [new Date(2018, 1, 6, 0, 1, 0), new Date(2018, 1, 6, 19, 0, 0)],
   [new Date(2018, 1, 7, 1, 0, 0), new Date(2018, 1, 7, 8, 0, 0)],
   [new Date(2018, 1, 7, 16, 0, 0), new Date(2018, 1, 7, 18, 30, 0)],
