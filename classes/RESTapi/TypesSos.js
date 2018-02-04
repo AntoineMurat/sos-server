@@ -11,8 +11,8 @@ const typesSos = [{
       name: 'Repas de liste : Poulet au curry avec légumes – 2€50',
       code: 'REPAS DE LISTE'
     }, {
-      name: 'Cookies (x10) – 1€',
-      code: '10 COOKIES'
+      name: 'Cookies (x5) – 1€',
+      code: '5 COOKIES'
     }, {
       name: 'Pâtes – gratuit',
       code: 'PATES'
