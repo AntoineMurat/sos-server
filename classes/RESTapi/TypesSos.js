@@ -8,6 +8,9 @@ const typesSos = [{
     required: true,
     multi: false,
     values: [{
+      name: 'Lasagnes (dans la limite des stocks disponibles) - gratuit',
+      code: 'LASAGNES'
+    }, {
       name: 'Repas de liste : Poulet au curry avec légumes – 2€50',
       code: 'REPAS DE LISTE'
     }, {

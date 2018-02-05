@@ -64,6 +64,11 @@ class HTTPServer{
 			https.createServer(options, this.app).listen(httpsPort, _ => console.log(`Serveur web sécurisé en écoute sur le port ${httpsPort}.`))
 	}
 
+	handleError(error, req, res){
+		res.json({error: error})
+		console.error(`[${new Date(Date.now()).toLocaleString()}][${req.connection.remoteAddress}] ${error}`)
+	}
+
 }
 
 module.exports = HTTPServer

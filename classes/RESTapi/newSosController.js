@@ -18,8 +18,7 @@ module.exports = function(req, res){
   .then(sos => addSos.bind(this)(sos))
   .then(_ => res.json({error: false}))
   .catch(error => {
-    res.json({error: error})
-    console.error(`Erreur "${error}" depuis ${req.connection.remoteAddress}.`)
+    this.httpServer.handleError(error, req, res)
   })
 }
 
@@ -138,10 +137,10 @@ const checkRadius = form => new Promise((resolve, reject) => {
   if (isNaN(dest.lat) || isNaN(dest.lng))
     return reject('coordinates inalides')
 
-  const acceptedPerimeter = [{center: {lat: 45.189205, lng: 5.730681}, r: 2.25}, {center: {lat: 45.189594, lng: 5.756319}, r: 2.25}]
+  // const acceptedPerimeter = [{center: {lat: 45.189205, lng: 5.730681}, r: 2.25}, {center: {lat: 45.189594, lng: 5.756319}, r: 2.25}]
   // Si
-  if (! acceptedPerimeter.some(p => distance(dest, p.center) < p.r))
-    return reject('Trop loin.')
+  // if (! acceptedPerimeter.some(p => distance(dest, p.center) < p.r))
+  //   return reject('Trop loin.')
 
   resolve()
 })

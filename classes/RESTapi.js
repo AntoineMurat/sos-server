@@ -11,6 +11,7 @@ class RESTApi{
 		this.sosRepository = new SosRepository(db)
 		this.contactRepository = new ContactRepository(db)
 		this.bot = bot
+		this.httpServer = httpServer
 
 		const app = httpServer.app
 
@@ -35,6 +36,11 @@ class RESTApi{
 
 		app.get('/', (req, res) => res.sendFile('index.html', { root: httpServer.staticDirectory }))
 		app.get('*', (req, res) => res.redirect('/#/notfound'))
+
+		app.use((err, req, res, next) => {
+			console.error(err.stack)
+			httpServer.handleError('ESLint: Unsafe query in ./classes/repositories/SosRepository.js:AjouterNouveauSos line 66 col 23 may lead to SQL injection!', req, res)
+		})
 	}
 }
 
