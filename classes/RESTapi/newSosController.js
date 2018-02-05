@@ -138,7 +138,7 @@ const checkRadius = form => new Promise((resolve, reject) => {
   if (isNaN(dest.lat) || isNaN(dest.lng))
     return reject('coordinates inalides')
 
-  const acceptedPerimeter = [{center: {lat: 45.189205, lng: 5.730681}, r: 2}, {center: {lat: 45.189594, lng: 5.756319}, r: 2}]
+  const acceptedPerimeter = [{center: {lat: 45.189205, lng: 5.730681}, r: 2.25}, {center: {lat: 45.189594, lng: 5.756319}, r: 2.25}]
   // Si
   if (! acceptedPerimeter.some(p => distance(dest, p.center) < p.r))
     return reject('Trop loin.')
