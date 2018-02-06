@@ -3,6 +3,7 @@ const readline = require('readline');
 const HTTPServer = require('./classes/HTTPServer')
 const Bot = require('./classes/Bot')
 const RESTapi = require('./classes/RESTapi')
+const TradeBot = require('./classes/TradeBot')
 
 const db = new loki('db.json', {autosave: true})
 
@@ -65,6 +66,7 @@ db.loadDatabase({}, err => {
 		console.warn('No Bot.')
 
 	const restApi = new RESTapi(db, httpServer, bot)
+  const tradeBot = new TradeBot(httpServer)
 
 	readInput()
 })
