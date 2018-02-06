@@ -38,13 +38,13 @@ class TradeBot {
         this.addOrder(newOrder)
       })
     })
+
+    setInterval(_ => this.checkTrades(), 50)
   }
 
   addOrder (order) {
     this.orders.push(order)
     this.io.emit('newOrder', order)
-
-    this.checkTrades()
   }
 
   checkTrades () {
