@@ -15,8 +15,8 @@ class TradeBot {
 
       socket.on('initValues', fn => {
         fn({
-          orders: this.orders.splice(0, 20),
-          trades: this.trades.splice(0, 10)
+          orders: this.orders.slice(0, 20),
+          trades: this.trades.slice(0, 10)
         })
       })
 
@@ -43,7 +43,7 @@ class TradeBot {
   }
 
   addOrder (order) {
-    this.orders.push(order)
+    this.orders.unshift(order)
     this.io.emit('newOrder', order)
   }
 
@@ -66,15 +66,15 @@ class TradeBot {
       to: buy.username
     }
 
-    this.trades.push(newTrade)
-    this.trades = this.trades.splice(0, 1000)
+    this.trades.unshift(newTrade)
+    this.trades = this.trades.slice(0, 1000)
     this.io.emit('newTrade', newTrade)
     this.removeOrder(buy)
     this.removeOrder(sell)
   }
 
   removeOrder (order) {
-    this.orders = this.orders.filter(anOrder => anOrder.id !== order.id).splice(0, 2000)
+    this.orders = this.orders.filter(anOrder => anOrder.id !== order.id).slice(0, 2000)
     this.io.emit('removeOrder', order)
   }
 
