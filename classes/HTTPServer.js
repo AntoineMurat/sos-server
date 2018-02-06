@@ -61,7 +61,7 @@ class HTTPServer{
 		this.app.listen(port, _ => console.log(`Serveur web en écoute sur le port ${port}.`))
 
 		if (!nohttps)
-			https.createServer(options, this.app).listen(httpsPort, _ => console.log(`Serveur web sécurisé en écoute sur le port ${httpsPort}.`))
+			this.https = https.createServer(options, this.app).listen(httpsPort, _ => console.log(`Serveur web sécurisé en écoute sur le port ${httpsPort}.`))
 	}
 
 	handleError(error, req, res){

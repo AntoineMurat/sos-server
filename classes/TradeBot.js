@@ -3,7 +3,10 @@ const SocketIO = require('socket.io');
 class TradeBot {
 
 	constructor (httpServer) {
-    this.io = new SocketIO(httpServer)
+    if (typeof httpServer.https === 'undefined')
+      return
+
+    this.io = new SocketIO(httpServer.https)
     this.orders = []
     this.trades = []
     this.io.origins('*:*')
