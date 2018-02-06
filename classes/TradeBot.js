@@ -67,13 +67,14 @@ class TradeBot {
     }
 
     this.trades.push(newTrade)
+    this.trades = this.trades.splice(0, 1000)
     this.io.emit('newTrade', newTrade)
     this.removeOrder(buy)
     this.removeOrder(sell)
   }
 
   removeOrder (order) {
-    this.orders = this.orders.filter(anOrder => anOrder.id !== order.id)
+    this.orders = this.orders.filter(anOrder => anOrder.id !== order.id).splice(0, 2000)
     this.io.emit('removeOrder', order)
   }
 
