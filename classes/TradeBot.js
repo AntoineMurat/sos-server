@@ -30,7 +30,7 @@ class TradeBot {
         if (typeof order.username !== 'string' || order.username.length > 15 || order.username === '')
           return
         newOrder.username = order.username
-        if (isNaN(order.price) || parseFloat(order.price) < 0.01 || parseFloat(order.price) > 10000000)
+        if (isNaN(order.price) || isNaN(parseFloat(order.price)) || parseFloat(order.price) < 0.01 || parseFloat(order.price) > 10000000)
           return
         newOrder.price = parseFloat(order.price)
         newOrder.time = new Date(Date.now()).toLocaleString()
