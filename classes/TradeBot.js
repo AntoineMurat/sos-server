@@ -3,7 +3,7 @@ const SocketIO = require('socket.io');
 class TradeBot {
 
 	constructor (httpServer) {
-    this.io = new SocketIO(666)
+    this.io = new SocketIO(httpServer)
     this.orders = []
     this.trades = []
     this.io.origins('*:*')
