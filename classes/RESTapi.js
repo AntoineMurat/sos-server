@@ -35,7 +35,7 @@ class RESTApi{
 		app.get('/admin/contacts/:id/', getHandlers.contactById.bind(this))
 
 		app.get('/', (req, res) => res.sendFile('index.html', { root: httpServer.staticDirectory }))
-		// app.get('*', (req, res) => res.redirect('/#/notfound'))
+		app.get('*', (req, res) => res.redirect('/#/notfound'))
 
 		app.use((err, req, res, next) => {
 			console.error(err.stack)
