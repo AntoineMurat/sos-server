@@ -70,10 +70,9 @@ const sosAvailabilities = [
   [new Date(2018, 1, 7, 1, 0, 0), new Date(2018, 1, 7, 8, 0, 0)],
   [new Date(2018, 1, 7, 16, 0, 0), new Date(2018, 1, 7, 18, 30, 0)],
   [new Date(2018, 1, 8, 7, 0, 0), new Date(2018, 1, 8, 19, 0, 0)],
-  [new Date(2018, 1, 9, 0, 1, 0), new Date(2018, 1, 9, 18, 0, 0)],
+  [new Date(2018, 1, 9, 1, 0, 0), new Date(2018, 1, 9, 18, 0, 0)],
   [new Date(2018, 1, 10, 6, 0, 0), new Date(2018, 1, 10, 13, 0, 0)],
-  [new Date(2018, 1, 10, 18, 0, 0), new Date(2018, 1, 10, 22, 0, 0)],
-  [new Date(2018, 1, 11, 18, 0, 0), new Date(2018, 1, 11, 23, 59, 0)]
+  [new Date(2018, 1, 10, 18, 0, 0), new Date(2018, 1, 10, 22, 0, 0)]
 ]
 
 module.exports.sosAvailable = _ => {
