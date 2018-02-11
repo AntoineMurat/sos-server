@@ -45,7 +45,7 @@ const events = [{
   inEvent: true
 }, {
   code: 'ENTREE_MANDAT',
-  textBefore: 'On entre en mandat dans',
+  textBefore: 'Nouveau mandat dans',
   date: new Date(2018, 7, 0, 0, 0, 0),
   inEvent: false
 }, {
