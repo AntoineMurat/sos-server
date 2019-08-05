@@ -25,7 +25,7 @@ module.exports = function(req, res){
 const checkRecaptcha = (req, response) => new Promise((resolve, reject) => {
   if (req.session.isAdmin)
     return resolve('est admin')
-  const SECRET = '6LciiD0UAAAAAAN7KCAYbAvRsWm-pUFHmS3L6Pfv'
+  const SECRET = 'RECAPTCHA_SECRET'
   axios.get(`https://www.google.com/recaptcha/api/siteverify?secret=${
     SECRET}&response=${response}`)
   .then(res => {
