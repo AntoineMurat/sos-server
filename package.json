@@ -9,7 +9,7 @@
   "author": "Antoine Murat",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.17.0",
+    "axios": "^0.21.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
